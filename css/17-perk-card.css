@@ -1,0 +1,19 @@
+/* Perk on/off card — design adapted from Uiverse.io by Tiagoadag: gradient frame, inner card shrinks on hover, soft glow */
+.perk-cards{display:flex;flex-wrap:wrap;gap:16px}
+.perk-card{justify-self:start}
+.menu .perk-tile{display:block;width:11rem;height:14rem;padding:3px;margin:0;gap:0;border-radius:20px;cursor:pointer;
+  background-image:linear-gradient(163deg,color-mix(in srgb,var(--muted) 70%,transparent) 0%,color-mix(in srgb,var(--line) 90%,transparent) 100%);
+  transition:all .3s;overflow:hidden}
+.menu .perk-tile:has(.perk-input:checked){background-image:linear-gradient(163deg,#3fc9a2 0%,#4b3fd6 100%)}
+.menu .perk-tile:hover{box-shadow:0 0 30px 1px rgba(63,201,162,.3)}
+.perk-input{clip:rect(0 0 0 0);clip-path:inset(100%);height:1px!important;width:1px!important;overflow:hidden;position:absolute;white-space:nowrap}
+.perk-face{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:100%;height:100%;padding:12px;border-radius:0;background:var(--panel,#1a1a1a);color:var(--muted);text-align:center;font-size:1rem;font-weight:700;transition:all .2s;position:relative}
+.perk-tile:hover .perk-face{transform:scale(.98);border-radius:20px}
+.perk-input:checked+.perk-face{color:var(--ink)}
+.perk-face::after{content:"OFF";position:absolute;bottom:12px;font-size:.72rem;letter-spacing:.12em;opacity:.6}
+.perk-input:checked+.perk-face::after{content:"ON";color:#3fc9a2;opacity:1}
+.perk-icon{font-size:4rem;line-height:1;filter:grayscale(1);opacity:.55;transition:.375s ease}
+.perk-input:checked+.perk-face .perk-icon{filter:none;opacity:1}
+.perk-label{transition:.375s ease}
+.perk-input:focus-visible+.perk-face{outline:3px solid var(--ink);outline-offset:-3px}
+:root[data-calm="1"] .perk-tile,:root[data-calm="1"] .perk-face,:root[data-calm="1"] .perk-icon,:root[data-calm="1"] .perk-label{transition:none!important}

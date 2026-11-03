@@ -1,0 +1,10 @@
+/* Slow panning background (Animista "bg-pan-top", looped), built from the theme colours */
+body{
+  background:linear-gradient(180deg,var(--bg) 0%,color-mix(in srgb,var(--bg) 82%,var(--gold)) 25%,color-mix(in srgb,var(--bg) 84%,#4b3fd6) 50%,color-mix(in srgb,var(--bg) 90%,#FFB347) 75%,var(--bg) 100%);
+  background-size:100% 300%;
+  background-color:var(--bg);
+  animation:bg-pan-top 20s ease-in-out infinite alternate both;
+}
+@keyframes bg-pan-top{0%{background-position:50% 100%}100%{background-position:50% 0%}}
+:root[data-calm="1"] body{animation:none;background:var(--bg)}
+@media (prefers-reduced-motion:reduce){:root:not([data-calm="0"]) body{animation-duration:60s}}

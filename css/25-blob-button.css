@@ -1,0 +1,26 @@
+/* Glow-blob button — design adapted from Uiverse.io by Spacious74, game colours */
+.blob-btn{cursor:pointer;font-size:1.15rem;font-weight:800;border-radius:16px;border:none;padding:2px;position:relative;color:var(--ink);
+  background:radial-gradient(circle 80px at 80% -10%,#FFB347,color-mix(in srgb,var(--bg) 85%,#000));
+  transition:transform .25s,filter .25s}
+.blob-btn::after{content:"";position:absolute;width:65%;height:60%;border-radius:120px;top:0;right:0;box-shadow:0 0 22px rgba(255,179,71,.28);z-index:-1}
+.blob-btn .blob1{position:absolute;width:70px;height:100%;border-radius:16px;bottom:0;left:0;
+  background:radial-gradient(circle 60px at 0% 100%,var(--gold),color-mix(in srgb,var(--gold) 50%,transparent),transparent);
+  box-shadow:-10px 10px 30px color-mix(in srgb,var(--gold) 22%,transparent);transition:width .35s}
+.blob-btn .blob2{position:absolute;width:60px;height:100%;border-radius:16px;top:0;right:0;opacity:.0;
+  background:radial-gradient(circle 50px at 100% 0%,#FFB347,transparent);transition:opacity .35s}
+.blob-btn .inner{padding:14px 26px;border-radius:14px;z-index:3;position:relative;
+  background:radial-gradient(circle 80px at 80% -50%,var(--tile-hover),var(--bg));text-shadow:none}
+.blob-btn .inner::before{content:"";width:100%;height:100%;left:0;top:0;border-radius:14px;position:absolute;pointer-events:none;
+  background:radial-gradient(circle 60px at 0% 100%,color-mix(in srgb,var(--gold) 14%,transparent),color-mix(in srgb,var(--gold) 6%,transparent),transparent)}
+.blob-btn:hover:not(:disabled){transform:translateY(-2px)}
+.blob-btn:hover:not(:disabled) .blob1{width:100px}
+.blob-btn:hover:not(:disabled) .blob2{opacity:.7}
+.blob-btn:active:not(:disabled){transform:translateY(0) scale(.98)}
+.blob-btn:disabled{opacity:.6;cursor:wait}
+.blob-btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+:root[data-calm="1"] .blob-btn,:root[data-calm="1"] .blob-btn .blob1,:root[data-calm="1"] .blob-btn .blob2{transition:none}
+/* game colours inside the button */
+.blob-btn{color:#1a1200}
+.blob-btn .inner{color:#1a1200;background:radial-gradient(circle 90px at 80% -40%,#FFB347,var(--gold) 70%)}
+.blob-btn .inner::before{background:radial-gradient(circle 60px at 0% 100%,rgba(255,255,255,.35),rgba(255,255,255,.1),transparent)}
+.blob-btn .blob1{background:radial-gradient(circle 60px at 0% 100%,#FFB347,color-mix(in srgb,var(--gold) 60%,transparent),transparent)}

@@ -1,0 +1,79 @@
+/* random team pick animation */
+.team{transition:transform .12s,box-shadow .12s,border-color .12s}
+.team.pick-hl{border-color:var(--gold);transform:scale(1.05);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 45%,transparent),0 0 22px color-mix(in srgb,var(--gold) 55%,transparent)}
+.team.pick-win{animation:pickWin 1.5s ease-out}
+@keyframes pickWin{0%{transform:scale(1)}20%{transform:scale(1.14);box-shadow:0 0 0 4px var(--gold),0 0 40px var(--gold)}45%{transform:scale(1.05)}65%{transform:scale(1.1);box-shadow:0 0 0 3px var(--gold),0 0 28px var(--gold)}100%{transform:scale(1)}}
+#rndPick:disabled{opacity:.6;cursor:wait}
+:root[data-calm="1"] .team,:root[data-calm="1"] .team.pick-win{transition:none;animation:none}
+.undo-row{display:flex;justify-content:center;margin-top:12px;width:100%}
+/* active team's perks under the board */
+.team-perks{margin:14px 0 0;display:grid;gap:8px;justify-items:center}
+.tp-det{width:100%;display:grid;justify-items:center}
+.tp-title{font:inherit;font-weight:800;font-size:.95rem;cursor:pointer;padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--panel);user-select:none}
+.tp-title::after{content:" ▾";display:inline-block;transition:transform .3s}
+.tp-det.open .tp-title::after{transform:rotate(180deg)}
+.tp-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease;width:100%}
+.tp-det.open .tp-wrap{grid-template-rows:1fr}
+.tp-inner{overflow:hidden;min-height:0;display:flex;justify-content:center}
+.tp-cards{padding-top:12px;opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .35s}
+.tp-det.open .tp-cards{opacity:1;transform:none}
+.tp-det.tp-anim.open .tp-cards .perk-card{animation:tpCard .4s ease-out backwards}
+.tp-det.tp-anim.open .tp-cards .perk-card:nth-child(2){animation-delay:.06s}.tp-det.open .tp-cards .perk-card:nth-child(3){animation-delay:.12s}.tp-det.open .tp-cards .perk-card:nth-child(4){animation-delay:.18s}
+@keyframes tpCard{from{opacity:0;transform:translateY(-12px) scale(.9)}to{opacity:1;transform:none}}
+:root[data-calm="1"] .tp-wrap,:root[data-calm="1"] .tp-cards,:root[data-calm="1"] .tp-title::after{transition:none}
+:root[data-calm="1"] .tp-det .perk-card{animation:none!important}
+.tp-cards{flex-wrap:wrap}
+.team-perks .perk-tile{display:block;width:7.5rem;height:9.5rem;padding:3px;margin:0;border-radius:16px;overflow:hidden;
+  background-image:linear-gradient(163deg,color-mix(in srgb,var(--muted) 70%,transparent) 0%,color-mix(in srgb,var(--line) 90%,transparent) 100%)}
+.team-perks .perk-tile:has(.perk-input:checked){background-image:linear-gradient(163deg,#3fc9a2 0%,#4b3fd6 100%)}
+.team-perks .perk-face{gap:6px;padding:8px;font-size:.82rem}
+.team-perks .perk-icon{font-size:2.4rem}
+.team-perks .perk-face::after{content:attr(data-n) "×";bottom:8px;font-size:.8rem;opacity:.8}
+.team-perks .perk-input:checked+.perk-face::after{content:attr(data-n) "×";color:#3fc9a2}
+.team-perks .perk-face::after{font-weight:800}
+#mqBar,#chBar,#rqBar{display:none!important}
+.team-perks .tp-use{cursor:pointer}
+.team-perks .tp-use:hover:not(.tp-blocked){box-shadow:0 0 24px 1px rgba(63,201,162,.35)}
+.team-perks .tp-blocked{cursor:not-allowed;opacity:.5}
+/* undo / redo: back-to-top style pills, fixed in the bottom-left corner */
+.undo-row{position:fixed;left:14px;bottom:14px;width:auto;margin:0;z-index:30;display:flex;gap:10px}
+.hist-btn{position:static!important;height:40px;padding:0 16px;border:0;border-radius:999px;display:flex;align-items:center;gap:8px;cursor:pointer;
+  background:var(--gold);color:#1a1200;font-weight:800;font-size:.85rem;font-family:inherit;box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 28%,transparent),0 4px 12px rgba(0,0,0,.35);
+  transition:background-color .3s,color .3s,box-shadow .3s,transform .3s}
+.hist-btn .svgIcon{width:11px;flex:none;transition:transform .3s}
+.hist-btn .svgIcon path{fill:currentColor}
+.hist-btn .ic-undo{transform:rotate(-90deg)}.hist-btn .ic-redo{transform:rotate(90deg)}
+.hist-btn:hover:not(:disabled){transform:translateY(-2px);background:#FFB347;box-shadow:0 0 0 4px rgba(255,179,71,.3),0 4px 12px rgba(0,0,0,.35)}
+.hist-btn:hover:not(:disabled) .ic-undo{transform:rotate(-90deg) translateY(-3px)}
+.hist-btn:hover:not(:disabled) .ic-redo{transform:rotate(90deg) translateY(-3px)}
+.hist-btn:disabled{background:color-mix(in srgb,var(--bg) 70%,#000);color:var(--muted);box-shadow:0 0 0 4px color-mix(in srgb,var(--muted) 18%,transparent);cursor:default;opacity:.8}
+:root[data-calm="1"] .hist-btn,:root[data-calm="1"] .hist-btn .svgIcon{transition:none!important}
+body{padding-bottom:70px}
+/* round label centered over the board */
+header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+header .row{justify-self:end}
+.round-mid{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+@media (max-width:640px){header{grid-template-columns:1fr auto}.round-mid{grid-column:1/-1;grid-row:2}}
+/* undo & redo share the exact same colors; disabled just dims the same gold */
+.hist-btn:disabled{background:var(--gold);color:#1a1200;box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 28%,transparent),0 4px 12px rgba(0,0,0,.35);opacity:.4;cursor:default}
+#undoBtn:disabled,#redoBtn:disabled{opacity:.4}
+/* perks: one column per team, side by side */
+.tp-inner{display:block!important}
+.tp-teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;width:100%;padding-top:12px;opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .35s}
+.tp-det.open .tp-teams{opacity:1;transform:none}
+.tp-team{display:grid;gap:8px;align-content:start;padding:8px;border-radius:14px;border:2px solid transparent;background:color-mix(in srgb,var(--panel) 60%,transparent)}
+.tp-team.is-active{border-color:var(--accent)}
+.tp-name{font-weight:800;text-align:center;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tp-team .tp-cards{padding:0;opacity:1;transform:none;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.tp-det.tp-anim.open .tp-team .perk-card{animation:tpCard .4s ease-out backwards}
+.tp-team .perk-tile{width:100%;height:6.6rem}
+.tp-team .perk-icon{font-size:1.8rem}
+.tp-team .perk-face{padding:6px;gap:4px;font-size:.7rem}
+.tp-team .perk-face::after{bottom:5px;font-size:.7rem}
+:root[data-calm="1"] .tp-teams{transition:none}
+.tp-team .perk-card{justify-self:stretch;min-width:0}.tp-team .perk-tile{min-width:0}
+/* undo / redo: calmer, muted gold */
+.hist-btn{background:color-mix(in srgb,var(--gold) 55%,var(--panel));color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 14%,transparent),0 3px 8px rgba(0,0,0,.3)}
+.hist-btn:hover:not(:disabled){background:color-mix(in srgb,#FFB347 70%,var(--panel));box-shadow:0 0 0 3px rgba(255,179,71,.2),0 3px 8px rgba(0,0,0,.3)}
+.hist-btn:disabled,#undoBtn:disabled,#redoBtn:disabled{background:color-mix(in srgb,var(--gold) 55%,var(--panel));color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 14%,transparent);opacity:.35}
+#undoBtn:disabled,#redoBtn:disabled{opacity:.22;filter:saturate(.6)}

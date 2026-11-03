@@ -1,0 +1,245 @@
+/* Start page: the quick-start dialog shown as a full page, with the game's cards and animations */
+#qsDlg{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;border-radius:0;overflow-y:auto;
+  background:
+    radial-gradient(ellipse 60% 45% at 12% 0%,color-mix(in srgb,var(--gold) 20%,transparent),transparent 70%),
+    radial-gradient(ellipse 55% 45% at 92% 100%,rgba(75,63,214,.22),transparent 70%),
+    var(--bg);
+  color:var(--ink)}
+#qsDlg::backdrop{background:var(--bg)}
+#qsDlg .qs{background:transparent;box-shadow:none;border-radius:0;max-width:1040px;width:100%;max-height:none;overflow:visible;margin:0 auto;padding:clamp(20px,5vw,48px) clamp(16px,4vw,32px) 64px;
+  display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;align-content:start!important;text-align:center}
+.qs-hero{grid-column:1/-1;display:grid;gap:6px;justify-items:center}
+.qs-logo{font-family:var(--f-head);font-weight:800;font-size:clamp(2.2rem,7vw,4rem);letter-spacing:.04em;color:var(--accent);display:inline-block;
+  transform:translate(3px,3px);text-shadow:var(--title-pop);animation:title-pop-a .6s cubic-bezier(.25,.46,.45,.94) both}
+.qs-logo:hover{animation-name:title-pop-b}
+#qsDlg .qs h2{margin:0;font-size:clamp(1.1rem,3vw,1.5rem);color:var(--muted);font-weight:700}
+.qs-col{display:grid;gap:12px;align-content:start;padding:20px;border-radius:20px;background:color-mix(in srgb,var(--panel) 75%,transparent);border:1px solid var(--line);animation:qsIn .55s cubic-bezier(.2,.9,.3,1.1) both}
+.qs-setup{animation-delay:.12s}
+.qs-foot{grid-column:1/-1;display:grid;gap:10px;justify-items:center;animation:qsIn .55s .24s cubic-bezier(.2,.9,.3,1.1) both}
+@keyframes qsIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+#qsDlg .qsl{margin:0;padding:0;border:0;color:var(--gold);font-family:var(--f-head);letter-spacing:.04em}
+#qsDlg .qs-col .qsl+.qsrow+.qsl,#qsDlg .qs-col .qsl+.qsgrid+.qsl{margin-top:8px}
+/* choice cards — same gradient frame as the menu's perk cards */
+#qsForm .qs-card,#qsForm .qs-chip{color:var(--ink);cursor:pointer;border:2px solid transparent;border-radius:16px;font-family:inherit;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(163deg,color-mix(in srgb,var(--muted) 70%,transparent),color-mix(in srgb,var(--line) 90%,transparent)) border-box;
+  transition:transform .25s,box-shadow .3s,background .3s}
+#qsForm .qs-card:not(.ghost),#qsForm .qs-chip:not(.ghost){color:var(--ink);
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(163deg,#3fc9a2 0%,#4b3fd6 100%) border-box;box-shadow:0 0 22px rgba(63,201,162,.22)}
+#qsForm .qs-card:hover,#qsForm .qs-chip:hover{transform:translateY(-2px) scale(.99);box-shadow:0 0 30px 1px rgba(63,201,162,.3)}
+#qsForm .qs-card.ghost{color:var(--muted)}
+#qsForm .qs-card .qs-ic{font-size:2.2rem;line-height:1;filter:grayscale(1);opacity:.6;transition:.35s}
+#qsForm .qs-card:not(.ghost) .qs-ic{filter:none;opacity:1}
+#qsForm .qsgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#qsForm .qsgrid .qs-card{text-align:center;justify-items:center;padding:14px 10px;gap:4px}
+#qsForm #qsDiffB{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;flex-wrap:wrap}
+#qsForm #qsDiffB .qs-diff{padding:12px 6px;font-size:.9rem;border-radius:14px}
+#qsForm #qsCount .qs-chip{width:46px;height:46px;border-radius:14px;font-size:1.1rem;font-weight:800}
+.qsn{animation:qsIn .35s both}
+.qsn:nth-child(2){animation-delay:.05s}.qsn:nth-child(3){animation-delay:.1s}.qsn:nth-child(4){animation-delay:.15s}.qsn:nth-child(5){animation-delay:.2s}.qsn:nth-child(6){animation-delay:.25s}
+#qsForm #qsGo{width:auto;margin-top:6px;font-size:1.3rem;padding:2px;border:0;border-radius:16px;background:radial-gradient(circle 80px at 80% -10%,#FFB347,color-mix(in srgb,var(--bg) 85%,#000))}
+#qsForm #qsGo .inner{padding:16px 54px;font-family:var(--f-head);letter-spacing:.04em}
+#qsForm .qsnote{max-width:640px;margin:4px 0 0}
+@media (max-width:760px){#qsDlg .qs{grid-template-columns:1fr}#qsForm #qsDiffB{grid-template-columns:1fr 1fr}}
+:root[data-calm="1"] .qs-col,:root[data-calm="1"] .qs-foot,:root[data-calm="1"] .qsn,:root[data-calm="1"] .qs-logo{animation:none}
+:root[data-calm="1"] #qsForm .qs-card,:root[data-calm="1"] #qsForm .qs-chip{transition:none}
+:root[data-theme="cyber"] .qs-logo{color:var(--gold);transform:none;text-shadow:2px 0 #FF2A6D,-2px 0 #00F0FF,0 0 18px rgba(252,238,10,.45)}
+
+/* header home button + back-to-game button */
+.home-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:1.25rem;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;margin-right:8px}
+.home-btn:hover{transform:translateY(-2px);border-color:#FFB347;box-shadow:0 0 0 3px rgba(255,179,71,.25)}
+header .row{display:flex;align-items:center}
+.title h1{user-select:none}
+#qsBack[hidden]{display:none}
+#qsForm #qsBack{border-radius:999px;padding:10px 22px;font-weight:800}
+:root[data-calm="1"] .home-btn{transition:none}
+:root[data-theme="cyber"] .home-btn{border-radius:0;border-color:var(--accent)}
+/* header buttons: black */
+header .menubtn,header .home-btn{background:#000;color:#f5f5f5}
+.home-btn{border-color:#1c1c24}
+:root[data-theme="light"] header .menubtn,:root[data-theme="light"] header .home-btn{background:#0a0a0f}
+
+/* ---- teams panel: sliding count selector + team cards ---- */
+#qsForm #qsCount{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:0;padding:4px;width:100%;max-width:340px;margin:0 auto;border-radius:999px;background:var(--bg);border:1px solid var(--line);flex-wrap:nowrap}
+#qsForm #qsCount .qs-ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px)/5);border-radius:999px;background:linear-gradient(135deg,var(--gold),#FFB347);box-shadow:0 4px 14px color-mix(in srgb,var(--gold) 40%,transparent);transition:transform .35s cubic-bezier(.4,1.3,.5,1)}
+#qsForm #qsCount .qs-chip{position:relative;z-index:1;width:auto;height:42px;border:0;border-radius:999px;background:transparent;box-shadow:none;color:var(--muted);font-size:1.1rem;font-weight:800;transition:color .25s,transform .2s}
+#qsForm #qsCount .qs-chip:hover{transform:none;box-shadow:none;color:var(--ink)}
+#qsForm #qsCount .qs-chip.on{color:#1a1200;background:transparent}
+#qsForm #qsCount .qs-chip:not(.on):hover{transform:scale(1.12)}
+/* team cards */
+#qsForm #qsNames{max-width:none;gap:10px;margin:0}
+.qsn{position:relative;display:flex;align-items:center;gap:12px;margin:0;padding:8px 14px 8px 18px;border-radius:16px;background:var(--panel);
+  box-shadow:inset 6px 0 0 var(--tc,var(--gold)),0 3px 0 rgba(0,0,0,.25);transition:transform .2s,box-shadow .25s,background .2s;animation:qsRowIn .4s cubic-bezier(.2,.9,.3,1.2) both}
+.qsn:hover,.qsn:focus-within{transform:translateY(-2px);background:color-mix(in srgb,var(--panel) 80%,var(--tc,var(--gold)));box-shadow:inset 6px 0 0 var(--tc,var(--gold)),0 0 24px color-mix(in srgb,var(--tc,var(--gold)) 35%,transparent)}
+.qsn-num{flex:none;width:26px;font-family:var(--f-head);font-weight:800;font-size:1.1rem;color:var(--muted);text-align:center}
+#qsForm .qsn input[type=color]{flex:none;width:34px;height:34px;min-width:34px;padding:0;border:2px solid var(--ink);border-radius:50%;background:none;cursor:pointer;overflow:hidden;transition:transform .2s}
+#qsForm .qsn input[type=color]:hover{transform:scale(1.15) rotate(12deg)}
+.qsn input[type=color]::-webkit-color-swatch-wrapper{padding:0}.qsn input[type=color]::-webkit-color-swatch{border:0;border-radius:50%}
+#qsForm .qsn input[type=text]{flex:1;min-width:0;background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0;padding:6px 2px;font-size:1.1rem;font-weight:800;box-shadow:none;transition:border-color .2s}
+#qsForm .qsn input[type=text]:focus{outline:none;border-bottom-color:var(--tc,var(--gold));box-shadow:none}
+@keyframes qsRowIn{from{opacity:0;transform:translateX(-18px) scale(.97)}to{opacity:1;transform:none}}
+.qsn:nth-child(n){animation-delay:0s}
+:root[data-calm="1"] .qsn,:root[data-calm="1"] #qsForm #qsCount .qs-ind{animation:none;transition:none}
+:root[data-theme="cyber"] .qsn{border-radius:0}
+
+/* ---- Start game button: orbiting light border, fill sweep, sliding play icon ---- */
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+#qsForm #qsGo.go-btn{position:relative;width:auto;margin-top:6px;padding:3px;border:0;border-radius:999px;cursor:pointer;font-family:var(--f-head);
+  background:conic-gradient(from var(--ang),var(--gold),#FFB347,#FFF3D6,#FFB347,var(--gold));
+  animation:goOrbit 3s linear infinite,goGlow 2.6s ease-in-out infinite;transition:transform .2s}
+@keyframes goOrbit{to{--ang:360deg}}
+@keyframes goGlow{0%,100%{box-shadow:0 0 18px color-mix(in srgb,var(--gold) 30%,transparent)}50%{box-shadow:0 0 38px color-mix(in srgb,var(--gold) 60%,transparent)}}
+#qsGo .go-in{position:relative;overflow:hidden;display:flex;align-items:center;gap:16px;padding:14px 38px 14px 18px;border-radius:999px;background:var(--bg);isolation:isolate}
+#qsGo .go-in::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(135deg,var(--gold),#FFB347);transform:translateX(-101%);transition:transform .45s cubic-bezier(.3,.9,.3,1)}
+#qsGo .go-play{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#FFB347);color:#1a1200;font-size:.95rem;padding-left:3px;transition:transform .35s cubic-bezier(.3,1.4,.5,1),background .3s,color .3s}
+#qsGo .go-txt{font-size:1.3rem;font-weight:800;letter-spacing:.04em;background:linear-gradient(90deg,var(--gold),#FFB347,#FFF3D6,#FFB347,var(--gold));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:goShine 3.2s linear infinite;transition:color .3s}
+@keyframes goShine{to{background-position:-200% 0}}
+#qsGo:hover .go-in::before{transform:none}
+#qsGo:hover .go-txt{animation:none;background:none;color:#1a1200;-webkit-text-fill-color:#1a1200}
+#qsGo:hover .go-play{transform:translateX(6px) scale(1.08);background:#1a1200;color:var(--gold)}
+#qsForm #qsGo.go-btn:hover{transform:translateY(-3px)}
+#qsForm #qsGo.go-btn:active{transform:translateY(1px) scale(.97)}
+#qsGo:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+:root[data-calm="1"] #qsForm #qsGo.go-btn,:root[data-calm="1"] #qsGo .go-txt{animation:none}
+:root[data-calm="1"] #qsGo .go-in::before,:root[data-calm="1"] #qsGo .go-play{transition:none}
+:root[data-theme="cyber"] #qsForm #qsGo.go-btn,:root[data-theme="cyber"] #qsGo .go-in,:root[data-theme="cyber"] #qsGo .go-play{border-radius:0}
+:root[data-theme="cyber"] #qsForm #qsGo.go-btn{background:conic-gradient(from var(--ang),#FF2A6D,#FCEE0A,#00F0FF,#FF2A6D)}
+
+/* ---- game type cards ---- */
+#qsForm #qsPre .qs-pre{position:relative;display:grid;align-content:start;gap:6px;padding:18px 12px 14px;border-radius:18px;overflow:hidden}
+#qsForm #qsPre .qs-pre b{font-family:var(--f-head);font-size:1.12rem}
+#qsForm #qsPre .qs-pre small{font-size:.8rem;line-height:1.35;opacity:.85}
+#qsForm #qsPre .qs-pre::before{content:"";position:absolute;inset:0;background:radial-gradient(circle 90px at 50% 0%,color-mix(in srgb,var(--gold) 22%,transparent),transparent);opacity:0;transition:opacity .35s;pointer-events:none}
+#qsForm #qsPre .qs-pre:hover::before,#qsForm #qsPre .qs-pre.on::before{opacity:1}
+#qsForm #qsPre .qs-pre:hover .qs-ic{transform:translateY(-3px) rotate(-8deg) scale(1.12);filter:none;opacity:1}
+#qsForm #qsPre .qs-pre.on{transform:translateY(-2px)}
+#qsForm #qsPre .qs-check{position:absolute;top:8px;right:8px;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;font-size:.8rem;font-weight:800;color:#06130f;
+  background:linear-gradient(135deg,#3fc9a2,#7be8c8);transform:scale(0) rotate(-90deg);transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+#qsForm #qsPre .qs-pre.on .qs-check{transform:none}
+#qsForm .qs-card .qs-ic{display:inline-block;transition:transform .35s cubic-bezier(.3,1.4,.5,1),filter .35s,opacity .35s}
+#qsForm #qsPre .qs-pre.on .qs-ic{animation:qsIcPop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes qsIcPop{0%{transform:scale(.6) rotate(-20deg)}100%{transform:none}}
+/* ---- difficulty: sliding level selector, colour follows the level ---- */
+#qsForm #qsDiffB{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:4px;border-radius:18px;background:var(--bg);border:1px solid var(--line);--lv:#4cd6a0}
+#qsForm #qsDiffB[data-level="easy"]{--lv:#4cd6a0}#qsForm #qsDiffB[data-level="medium"]{--lv:#FFB347}#qsForm #qsDiffB[data-level="hard"]{--lv:#FF6B5A}#qsForm #qsDiffB[data-level="impossible"]{--lv:#FF2A6D}
+#qsForm #qsDiffB .qs-ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px)/4);border-radius:14px;background:linear-gradient(135deg,var(--lv),color-mix(in srgb,var(--lv) 65%,#fff));box-shadow:0 4px 16px color-mix(in srgb,var(--lv) 45%,transparent);transition:transform .38s cubic-bezier(.4,1.3,.5,1),background .3s,box-shadow .3s}
+#qsForm .qs-dstep{position:relative;z-index:1;display:grid;justify-items:center;gap:2px;padding:10px 4px;border:0;border-radius:14px;background:transparent;color:var(--muted);font-family:inherit;font-weight:800;font-size:.85rem;cursor:pointer;transition:color .25s,transform .2s}
+#qsForm .qs-dstep .qs-dic{font-size:1.4rem;line-height:1;transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
+#qsForm .qs-dstep:hover:not(.on){color:var(--ink)}
+#qsForm .qs-dstep:hover .qs-dic{transform:scale(1.25) rotate(-8deg)}
+#qsForm .qs-dstep.on{color:#1a1200}
+#qsForm .qs-dstep.on .qs-dic{animation:qsIcPop .5s cubic-bezier(.3,1.6,.5,1)}
+#qsForm #qsDiffInfo{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:0;margin:4px 0 0}
+#qsForm #qsDiffInfo.pop .qs-stat{animation:qsIn .35s both}#qsForm #qsDiffInfo.pop .qs-stat:nth-child(2){animation-delay:.07s}
+.qs-stat{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:.92rem;font-weight:700;line-height:1.2}
+.qs-stat i{font-style:normal;font-size:1.1rem}
+:root[data-calm="1"] #qsForm #qsDiffB .qs-ind,:root[data-calm="1"] #qsForm .qs-dstep,:root[data-calm="1"] #qsForm #qsPre .qs-check,:root[data-calm="1"] #qsForm .qs-card .qs-ic{transition:none}
+:root[data-calm="1"] #qsForm #qsPre .qs-pre.on .qs-ic,:root[data-calm="1"] #qsForm .qs-dstep.on .qs-dic,:root[data-calm="1"] #qsForm #qsDiffInfo.pop .qs-stat{animation:none}
+@media (max-width:760px){#qsForm #qsDiffB{grid-template-columns:repeat(4,1fr)}#qsForm .qs-dstep{font-size:.72rem}}
+
+/* ---- start page: categories ---- */
+.qs-cats{grid-column:1/-1;animation-delay:.18s}
+.qsc-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.qsc-head .qsl{margin:0!important}
+.qsc-tools{display:flex;align-items:center;gap:10px}
+.qsc-count{padding:5px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-weight:800;font-size:.9rem;color:var(--ink)}
+.qsc-sub{margin:0;color:var(--muted);font-size:.92rem;text-align:left}
+.qsc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+#qsForm .qsc-card{position:relative;display:grid;justify-items:center;align-content:start;gap:4px;padding:16px 10px 12px;min-height:116px;border:2px solid transparent;border-radius:16px;cursor:pointer;font-family:inherit;color:var(--muted);
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(163deg,color-mix(in srgb,var(--muted) 60%,transparent),color-mix(in srgb,var(--line) 90%,transparent)) border-box;
+  transition:transform .25s,box-shadow .3s,color .25s;animation:qsIn .4s both}
+#qsForm .qsc-card b{font-family:var(--f-head);font-size:.98rem;line-height:1.2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow-wrap:anywhere}
+#qsForm .qsc-card small{font-size:.78rem;opacity:.8}
+.qsc-ic{font-size:1.9rem;line-height:1;filter:grayscale(1);opacity:.55;transition:transform .35s cubic-bezier(.3,1.5,.5,1),filter .3s,opacity .3s}
+#qsForm .qsc-card.on{color:var(--ink);background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(163deg,#3fc9a2 0%,#4b3fd6 100%) border-box;box-shadow:0 0 18px rgba(63,201,162,.18)}
+#qsForm .qsc-card.on .qsc-ic{filter:none;opacity:1}
+#qsForm .qsc-card:hover{transform:translateY(-3px);box-shadow:0 0 26px rgba(63,201,162,.3)}
+#qsForm .qsc-card:hover .qsc-ic{transform:scale(1.18) rotate(-8deg)}
+#qsForm .qsc-card:active{transform:scale(.97)}
+.qsc-check{position:absolute;top:6px;right:6px;width:20px;height:20px;display:grid;place-items:center;border-radius:50%;font-size:.72rem;font-weight:800;color:#06130f;background:linear-gradient(135deg,#3fc9a2,#7be8c8);transform:scale(0) rotate(-90deg);transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+#qsForm .qsc-card.on .qsc-check{transform:none}
+.qsc-del{position:absolute;top:6px;left:6px;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;font-size:.7rem;background:var(--bg);color:var(--muted);opacity:0;transition:opacity .2s,color .2s}
+#qsForm .qsc-card:hover .qsc-del,.qsc-del[data-sure]{opacity:1}.qsc-del:hover{color:var(--bad)}
+.qsc-msg{margin:0;min-height:1.2em;font-size:.9rem;color:var(--gold);font-weight:700}
+#qsForm .qsc-add{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border:2px dashed var(--muted);border-radius:16px;background:transparent;color:var(--ink);font:inherit;font-weight:800;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+#qsForm .qsc-add span{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#FFB347);color:#1a1200;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+#qsForm .qsc-add em{font-style:normal;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--bg);color:var(--muted)}
+#qsForm .qsc-add:hover{transform:translateY(-2px);border-color:#FFB347;background:color-mix(in srgb,var(--gold) 8%,transparent)}.qsc-add:hover span{transform:rotate(90deg) scale(1.15)}
+.qsc-form{display:grid;gap:10px;text-align:left;max-width:640px;margin:0 auto;padding:16px;border-radius:16px;background:var(--bg);border:1px solid var(--line);animation:qsIn .35s both}
+.qsc-form input,.qsc-form textarea{width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;border:2px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-weight:600;resize:vertical;transition:border-color .2s,box-shadow .2s}
+.qsc-form input:focus,.qsc-form textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 20%,transparent)}
+.qsc-acts{display:flex;gap:10px;flex-wrap:wrap}
+#qsForm .qsc-acts button,#qsForm .qsc-tools button,#qsForm .qsc-add{font-family:inherit}
+:root[data-calm="1"] .qsc-card,:root[data-calm="1"] .qsc-form{animation:none}
+:root[data-calm="1"] #qsForm .qsc-card,:root[data-calm="1"] .qsc-ic,:root[data-calm="1"] .qsc-check,:root[data-calm="1"] .qsc-add,:root[data-calm="1"] .qsc-add span{transition:none}
+/* impossible: blood-red, pulsing — a really hard game */
+#qsForm #qsDiffB[data-level="impossible"]{--lv:#E0102E}
+#qsForm #qsDiffB[data-level="impossible"] .qs-ind{background:linear-gradient(135deg,#FF1F3D,#8A0019);box-shadow:0 0 18px rgba(224,16,46,.6);animation:qsDanger 1.4s ease-in-out infinite}
+#qsForm #qsDiffB[data-level="impossible"] .qs-dstep.on{color:#fff}
+#qsForm #qsDiffB[data-level="impossible"] .qs-dstep.on .qs-dic{animation:qsIcPop .5s cubic-bezier(.3,1.6,.5,1),qsShake 2.2s .6s ease-in-out infinite}
+@keyframes qsDanger{0%,100%{box-shadow:0 0 12px rgba(224,16,46,.45)}50%{box-shadow:0 0 30px rgba(255,31,61,.85)}}
+@keyframes qsShake{0%,88%,100%{transform:none}90%{transform:translateX(-2px) rotate(-6deg)}93%{transform:translateX(2px) rotate(6deg)}96%{transform:translateX(-2px) rotate(-4deg)}}
+#qsForm .qs-dstep[data-k="impossible"]:hover:not(.on){color:#FF5A6E}
+:root[data-calm="1"] #qsForm #qsDiffB[data-level="impossible"] .qs-ind,:root[data-calm="1"] #qsForm #qsDiffB[data-level="impossible"] .qs-dstep.on .qs-dic{animation:none}
+
+#qsDlg .qs h2#qsH{animation:qsIn .6s .25s cubic-bezier(.2,.9,.3,1.1) both;color:var(--ink);font-weight:700}
+:root[data-calm="1"] #qsDlg .qs h2#qsH{animation:none}
+/* welcome line hidden for now (kept for screen readers) — delete this rule to bring it back */
+#qsDlg .qs h2#qsH{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;animation:none}
+
+#qsForm #qsGo.is-locked{opacity:.4;filter:grayscale(.7);cursor:not-allowed;animation:none;transform:none}
+#qsGo.is-locked .go-txt{animation:none}
+#qsGo.is-locked:hover .go-in::before{transform:translateX(-101%)}
+#qsGo.is-locked:hover .go-txt{background:linear-gradient(90deg,var(--gold),#FFB347);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+#qsGo.is-locked:hover .go-play{transform:none;background:linear-gradient(135deg,var(--gold),#FFB347);color:#1a1200}
+.qsc-grid.is-low .qsc-card:not(.on){animation:qsNudge 1.6s ease-in-out infinite}
+@keyframes qsNudge{0%,100%{box-shadow:none}50%{box-shadow:0 0 16px rgba(255,179,71,.35)}}
+:root[data-calm="1"] .qsc-grid.is-low .qsc-card{animation:none}
+
+/* ---- round badge ---- */
+.round-mid #roundLbl.round{position:relative;display:inline-flex;align-items:baseline;gap:8px;padding:6px 20px 10px;border:2px solid transparent;border-radius:16px;overflow:hidden;letter-spacing:0;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(135deg,var(--gold),#FFB347) border-box;
+  box-shadow:0 3px 0 rgba(0,0,0,.28),0 0 22px color-mix(in srgb,var(--gold) 20%,transparent)}
+#roundLbl .rl-cap{font-family:var(--f-head);font-size:.8rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+#roundLbl .rl-num{display:inline-block;font-family:var(--f-head);font-size:1.7rem;line-height:1;font-weight:800;color:var(--gold);text-shadow:0 0 14px color-mix(in srgb,var(--gold) 45%,transparent)}
+#roundLbl .rl-num.pop{animation:rlPop .6s cubic-bezier(.3,1.6,.5,1)}
+#roundLbl .rl-of{font-size:.9rem;font-weight:700;color:var(--muted)}
+#roundLbl .rl-bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+#roundLbl .rl-bar u{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#FFB347);border-radius:0 4px 4px 0;transition:width .6s cubic-bezier(.3,.9,.3,1)}
+@keyframes rlPop{0%{transform:scale(.4) translateY(10px);opacity:0}60%{transform:scale(1.35)}100%{transform:none;opacity:1}}
+:root[data-calm="1"] #roundLbl .rl-num.pop{animation:none}:root[data-calm="1"] #roundLbl .rl-bar u{transition:none}
+:root[data-theme="cyber"] .round-mid #roundLbl.round{border-radius:0;background:linear-gradient(#0E0E18,#0E0E18) padding-box,linear-gradient(135deg,var(--accent),#FF2A6D) border-box}
+:root[data-theme="cyber"] #roundLbl .rl-num{color:var(--accent);text-shadow:0 0 14px rgba(0,240,255,.6)}
+/* round badge typography */
+:root{--f-round:"Oswald","Arial Narrow",Impact,sans-serif}
+:root[data-theme="cyber"]{--f-round:"Orbitron","Rajdhani",sans-serif}
+#roundLbl .rl-cap{font-family:var(--f-round);font-weight:500;font-size:.95rem;letter-spacing:.2em;color:color-mix(in srgb,var(--ink) 75%,var(--muted))}
+#roundLbl .rl-num{font-family:var(--f-round);font-weight:700;font-size:2.1rem;letter-spacing:.02em;transform:translateY(2px)}
+#roundLbl .rl-of{font-family:var(--f-round);font-weight:500;font-size:1.05rem;letter-spacing:.06em;color:var(--muted)}
+/* round badge: number the same size as the letters */
+.round-mid #roundLbl.round{align-items:center;gap:7px;padding:6px 20px 11px}
+#roundLbl .rl-cap,#roundLbl .rl-num,#roundLbl .rl-of{font-size:1.1rem;line-height:1.2;letter-spacing:.14em;transform:none}
+#roundLbl .rl-cap{font-weight:600;color:var(--ink)}
+#roundLbl .rl-num{font-weight:700;letter-spacing:.08em}
+#roundLbl .rl-of{font-weight:500;letter-spacing:.08em}
+/* round badge: even padding + trailing letter-spacing removed so the text is truly centred */
+.round-mid #roundLbl.round{padding:9px 22px 10px;gap:8px;align-items:center;justify-content:center;height:auto}
+#roundLbl .rl-cap{margin-right:-.14em}
+#roundLbl .rl-num{margin-right:-.08em;display:inline-block;min-width:.7em;text-align:center}
+#roundLbl .rl-of{margin-right:-.08em}
+#roundLbl .rl-cap,#roundLbl .rl-num,#roundLbl .rl-of{display:inline-flex;align-items:center;height:1.2em;padding:0}
+.round-mid #roundLbl.round{gap:10px}
+#roundLbl .rl-num{min-width:0}
+
+/* Animista "vibrate-1" — shakes the things that need attention */
+.vibrate{animation:vibrate-1 .3s linear 3 both!important}
+@keyframes vibrate-1{0%{transform:translate(0)}20%{transform:translate(-2px,2px)}40%{transform:translate(-2px,-2px)}60%{transform:translate(2px,2px)}80%{transform:translate(2px,-2px)}100%{transform:translate(0)}}
+.qsc-count.is-low{background:rgba(224,16,46,.18);border-color:#E0102E;color:#FF8A98}
+.qsc-grid.is-low .qsc-card:not(.on){border-color:transparent;box-shadow:0 0 0 2px rgba(255,179,71,.45)}
+#qsCatMsg:not(:empty){padding:8px 14px;border-radius:12px;background:rgba(255,179,71,.12);border:1px solid rgba(255,179,71,.4);color:#FFD08A;font-weight:800}
+#qsForm #qsGo.is-locked{cursor:not-allowed}
+:root[data-calm="1"] .vibrate{animation:none!important}
+
+/* quick-settings subtitle + configure button */
+.qs-subt{margin:0;color:var(--muted);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem}
+#qsForm #qsCfg{border-radius:14px;padding:10px 18px;font-weight:800}
+#menuLaunch{background:linear-gradient(135deg,var(--gold),#FFB347);color:#14152B;border:0;font-weight:900}

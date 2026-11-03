@@ -1,0 +1,17 @@
+/* Menu button styles */
+
+/* menu buttons */
+.menu .ghost,.menu .actions .skip,.menu .row>button{font-family:var(--f-head);font-weight:800;letter-spacing:.02em;font-size:.95rem;padding:10px 18px;border-radius:999px;cursor:pointer;color:var(--gold);background:var(--tile);border:2px solid color-mix(in srgb,var(--gold) 50%,transparent);box-shadow:0 3px 0 rgba(0,0,0,.28);transition:transform .15s,background .15s,box-shadow .15s}
+.menu .ghost:hover,.menu .actions .skip:hover,.menu .row>button:hover{background:var(--tile-hover);transform:translateY(-2px)}
+.menu .ghost:active,.menu .actions .skip:active,.menu .row>button:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.28)}
+.menu .ghost:disabled,.menu .row>button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.menu .ghost:focus-visible,.menu .actions button:focus-visible,.menu .row>button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.menu .actions button:not(.skip){font-family:var(--f-head);font-weight:800;border:0;border-radius:999px;color:#1a1a2e;background:linear-gradient(135deg,var(--gold),#FFB347);box-shadow:0 3px 0 rgba(0,0,0,.28);transition:transform .15s}
+.menu .actions button:not(.skip):hover{transform:translateY(-2px)}
+.menu .panel .ghost:not(.icon),.menu .grp .ghost:not(.icon),.menu .panel button.skip:not(.actions *){justify-self:center!important;align-self:center;width:fit-content!important;max-width:100%;margin-inline:auto}
+.menu .btnpair{display:flex!important;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:10px}
+.menu .btnpair>.ghost{margin:0!important}
+.menu div:has(>#rndBtn){display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.menu .grp>button.ghost,.menu .grp .ghost:not(.icon){justify-self:center}
+.menu #qBtns,.menu .diffbox .row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+@media (prefers-reduced-motion:reduce){.menu .ghost,.menu .actions button,.menu .row>button{transition:none}}

@@ -1,0 +1,14 @@
+/* Title: Animista "text-pop-up-br" — pops up with a 3D extrusion.
+   Toned down so it settles in place (the original ends 50px away and would cover the board). */
+:root{
+  --title-ext:color-mix(in srgb,var(--accent) 38%,#000);
+  --title-pop:0 1px 0 var(--title-ext),0 2px 0 var(--title-ext),0 3px 0 var(--title-ext),0 4px 0 var(--title-ext),0 5px 0 var(--title-ext),0 6px 0 var(--title-ext),0 7px 0 var(--title-ext),0 8px 0 var(--title-ext),0 9px 0 var(--title-ext),0 14px 14px rgba(0,0,0,.35);
+}
+.title h1{display:inline-block;transform:translate(3px,3px);text-shadow:var(--title-pop);cursor:default;
+  animation:title-pop-a .5s cubic-bezier(.25,.46,.45,.94) both}
+.title h1:hover{animation-name:title-pop-b}
+@keyframes title-pop-a{0%{transform:translate(0,0);text-shadow:none}100%{transform:translate(3px,3px);text-shadow:var(--title-pop)}}
+@keyframes title-pop-b{0%{transform:translate(0,0);text-shadow:none}100%{transform:translate(3px,3px);text-shadow:var(--title-pop)}}
+:root[data-calm="1"] .title h1{animation:none}
+/* cyberpunk keeps its own glitch title */
+:root[data-theme="cyber"] .title h1{transform:none}

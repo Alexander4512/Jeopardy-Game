@@ -1,0 +1,47 @@
+/* Cyberpunk 2077 theme: yellow / cyan / magenta neon on near-black, cut corners, scanlines */
+:root[data-theme="cyber"]{
+  color-scheme:dark;
+  --f-head:"Orbitron","Rajdhani",system-ui,sans-serif;--f-body:"Rajdhani",system-ui,sans-serif;
+  --bg:#0A0A0F;--tile:#14141F;--tile-hover:#1E1E33;--gold:#FCEE0A;--accent:#00F0FF;--ink:#E8F9FF;
+  --line:#2B1A3F;--panel:#10101A;--good:#00FF9F;--bad:#FF2A6D;--muted:#8A93B2;--on-tile:#E8F9FF;
+  --tshadow:0 0 12px rgba(0,240,255,.55);--cat:#1A0F2E;
+}
+:root[data-theme="cyber"] body{
+  font-family:var(--f-body);font-weight:600;
+  background:
+    linear-gradient(rgba(0,240,255,.05) 1px,transparent 1px) 0 0/100% 4px,
+    radial-gradient(ellipse 60% 40% at 15% 0%,rgba(255,42,109,.22),transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 100%,rgba(0,240,255,.18),transparent 70%),
+    linear-gradient(180deg,#0A0A0F 0%,#150A25 45%,#0A0A0F 100%);
+  background-size:100% 4px,100% 100%,100% 100%,100% 300%;
+  background-color:#0A0A0F;
+  animation:cyber-pan 18s ease-in-out infinite alternate both;
+}
+@keyframes cyber-pan{0%{background-position:0 0,0 0,0 0,50% 100%}100%{background-position:0 0,0 0,0 0,50% 0%}}
+:root[data-theme="cyber"] h1{color:var(--gold);letter-spacing:.12em;text-shadow:2px 0 #FF2A6D,-2px 0 #00F0FF,0 0 18px rgba(252,238,10,.45);animation:cyber-glitch 6s infinite}
+@keyframes cyber-glitch{0%,92%,100%{transform:none;text-shadow:2px 0 #FF2A6D,-2px 0 #00F0FF,0 0 18px rgba(252,238,10,.45)}93%{transform:translateX(-3px) skewX(-6deg);text-shadow:-4px 0 #FF2A6D,4px 0 #00F0FF}95%{transform:translateX(3px);text-shadow:4px 0 #FF2A6D,-4px 0 #00F0FF}97%{transform:none}}
+:root[data-theme="cyber"] .round{color:var(--accent);border-color:var(--accent);box-shadow:0 0 10px rgba(0,240,255,.4),inset 0 0 8px rgba(0,240,255,.15);font-family:var(--f-head)}
+/* cut-corner panels */
+:root[data-theme="cyber"] .cat,:root[data-theme="cyber"] .tile,:root[data-theme="cyber"] .team{
+  border-radius:0;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
+:root[data-theme="cyber"] .cat{background:linear-gradient(135deg,#2A0F45,#1A0F2E);color:var(--accent);text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid var(--accent);text-shadow:0 0 10px rgba(0,240,255,.6)}
+:root[data-theme="cyber"] .tile{background:linear-gradient(135deg,#171726,#0E0E18);color:var(--gold);border:0;text-shadow:0 0 12px rgba(252,238,10,.55);box-shadow:inset 0 0 0 2px rgba(252,238,10,.35)}
+:root[data-theme="cyber"] .tile:hover:not(:disabled){background:linear-gradient(135deg,#2A2A12,#1A1A0A);transform:scale(.98);box-shadow:inset 0 0 0 2px var(--gold),0 0 24px rgba(252,238,10,.45);color:#fff86b}
+:root[data-theme="cyber"] .tile:disabled{opacity:.25}
+:root[data-theme="cyber"] .team{background:linear-gradient(135deg,#14141F,#0E0E18);border:0;box-shadow:inset 0 0 0 1px rgba(0,240,255,.25)}
+:root[data-theme="cyber"] .team.active{box-shadow:inset 0 0 0 2px var(--accent),0 0 18px rgba(0,240,255,.35)}
+:root[data-theme="cyber"] .score{color:var(--gold);text-shadow:0 0 10px rgba(252,238,10,.5)}
+:root[data-theme="cyber"] .score.neg{color:var(--bad);text-shadow:0 0 10px rgba(255,42,109,.55)}
+/* dialogs, menu, buttons */
+:root[data-theme="cyber"] dialog{background:#0E0E18;color:var(--ink);border:1px solid var(--accent);border-radius:0;box-shadow:0 0 30px rgba(0,240,255,.3),inset 0 0 40px rgba(255,42,109,.06)}
+:root[data-theme="cyber"] dialog::backdrop{background:rgba(5,0,15,.8)}
+:root[data-theme="cyber"] button.ghost{border-color:var(--accent);color:var(--accent);border-radius:0;text-transform:uppercase;letter-spacing:.05em}
+:root[data-theme="cyber"] button.ghost:hover:not(:disabled){background:rgba(0,240,255,.12);box-shadow:0 0 14px rgba(0,240,255,.4)}
+:root[data-theme="cyber"] .hist-btn,:root[data-theme="cyber"] .to-top{border-radius:0;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))}
+:root[data-theme="cyber"] .blob-btn,:root[data-theme="cyber"] .blob-btn .inner{border-radius:0}
+:root[data-theme="cyber"] .blob-btn .inner{background:linear-gradient(135deg,var(--gold),#FFB800);color:#0A0A0F;font-family:var(--f-head);text-transform:uppercase;letter-spacing:.06em}
+:root[data-theme="cyber"] .blob-btn{background:linear-gradient(135deg,#FF2A6D,#00F0FF)}
+:root[data-theme="cyber"] .team.pick-hl,:root[data-theme="cyber"] .team.pick-win{box-shadow:inset 0 0 0 3px var(--gold),0 0 28px rgba(252,238,10,.6)}
+:root[data-theme="cyber"] .tp-team,:root[data-theme="cyber"] .tp-title{border-radius:0}
+:root[data-calm="1"][data-theme="cyber"] body{animation:none}
+:root[data-calm="1"][data-theme="cyber"] h1{animation:none}

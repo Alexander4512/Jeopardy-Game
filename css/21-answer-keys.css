@@ -1,0 +1,52 @@
+/* Answer choices in the question dialog — "key switch" design adapted from Uiverse.io by m1her, coloured with the board palette */
+.grow .opts:has(>.opt){display:flex;flex-wrap:wrap;align-items:center;gap:2px;padding:4px;width:fit-content;max-width:100%;border-radius:10px;background:color-mix(in srgb,var(--bg) 80%,#000)}
+.grow .opt{position:relative;min-width:56px;min-height:46px;padding:8px 14px;border:0;border-top:1px solid color-mix(in srgb,var(--tile) 55%,#fff);border-radius:0;
+  background:linear-gradient(to bottom,color-mix(in srgb,var(--tile) 88%,#fff),var(--tile));
+  color:var(--ink);font-weight:800;font-size:.95rem;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;
+  text-shadow:0 2px 3px rgba(0,0,0,.3);box-shadow:0 8px 5px -2px rgba(0,0,0,.25);transition:all .1s linear}
+.grow .opts>.opt:first-of-type{border-top-left-radius:6px;border-bottom-left-radius:6px}
+.grow .opts>.opt:last-of-type{border-top-right-radius:6px;border-bottom-right-radius:6px}
+.grow .opt:hover{background:linear-gradient(to bottom,color-mix(in srgb,var(--tile) 78%,#fff),color-mix(in srgb,var(--tile) 92%,#fff))}
+.grow .opt.on{background:color-mix(in srgb,var(--bg) 85%,#000);border-top-color:transparent;box-shadow:0 8px 5px -2px rgba(0,0,0,0);color:var(--gold);text-shadow:0 0 12px var(--gold)}
+.grow .opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+:root[data-calm="1"] .grow .opt{transition:none}
+
+/* Multiple-choice options of the question: same key-switch tray */
+#mcBox:not([hidden]){display:flex!important;flex-wrap:wrap;gap:2px;padding:4px;border-radius:10px;background:color-mix(in srgb,var(--bg) 80%,#000);width:100%}
+#mcBox .mco{position:relative;flex:1 1 40%;min-height:60px;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 14px;border-radius:0;
+  background:linear-gradient(to bottom,color-mix(in srgb,var(--tile) 88%,#fff),var(--tile));border-top:1px solid color-mix(in srgb,var(--tile) 55%,#fff);color:var(--ink);font-weight:800;
+  text-shadow:0 2px 3px rgba(0,0,0,.3);box-shadow:0 8px 5px -2px rgba(0,0,0,.25);transition:all .1s linear}
+#mcBox .mco:first-child{border-top-left-radius:6px;border-bottom-left-radius:6px}
+#mcBox .mco:last-child{border-top-right-radius:6px;border-bottom-right-radius:6px}
+#mcBox .mco[role=button]:hover:not([aria-disabled=true]){background:linear-gradient(to bottom,color-mix(in srgb,var(--tile) 78%,#fff),color-mix(in srgb,var(--tile) 92%,#fff))}
+#mcBox .mco:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#mcBox .mco.ok,#mcBox .mco.no{border-top-color:transparent;box-shadow:0 8px 5px -2px rgba(0,0,0,0);background:color-mix(in srgb,var(--bg) 85%,#000)}
+#mcBox .mco.ok{color:var(--good);text-shadow:0 0 12px var(--good)}
+#mcBox .mco.no{color:var(--bad);text-shadow:0 0 12px var(--bad)}
+
+/* Question dialog action buttons (Correct / Wrong, Pause / Show answer / Skip, Continue, perks): same key-switch tray */
+#dlg .actions:not([hidden]){display:flex;flex-wrap:wrap;justify-content:center;gap:2px;padding:4px;width:fit-content;max-width:100%;margin-inline:auto;border-radius:10px;background:color-mix(in srgb,var(--bg) 80%,#000)}
+#dlg .actions button:not([hidden]){display:flex;align-items:center;justify-content:center;min-width:96px;min-height:48px;padding:8px 18px;border:0;border-top:1px solid color-mix(in srgb,var(--tile) 55%,#fff);border-radius:6px;
+  background:linear-gradient(to bottom,color-mix(in srgb,var(--tile) 88%,#fff),var(--tile));color:var(--ink);font-weight:800;font-size:.95rem;text-transform:uppercase;letter-spacing:.03em;
+  text-shadow:0 2px 3px rgba(0,0,0,.3);box-shadow:0 8px 5px -2px rgba(0,0,0,.25);cursor:pointer;transition:all .1s linear}
+#dlg .actions button:hover:not(:disabled){background:linear-gradient(to bottom,color-mix(in srgb,var(--tile) 78%,#fff),color-mix(in srgb,var(--tile) 92%,#fff))}
+#dlg .actions button:active:not(:disabled){background:color-mix(in srgb,var(--bg) 85%,#000);border-top-color:transparent;box-shadow:0 8px 5px -2px rgba(0,0,0,0);color:var(--gold);text-shadow:0 0 12px var(--gold)}
+#dlg .actions button.ok:not([hidden]){color:var(--good)}
+#dlg .actions button.no:not([hidden]){color:var(--bad)}
+#dlg .actions .ok:active:not(:disabled){color:var(--good);text-shadow:0 0 12px var(--good)}
+#dlg .actions .no:active:not(:disabled){color:var(--bad);text-shadow:0 0 12px var(--bad)}
+#dlg .actions button:disabled{opacity:.45;cursor:not-allowed}
+#dlg .actions button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+:root[data-calm="1"] #dlg .actions button{transition:none}
+
+/* Team colour: keys of the question dialog follow the team whose turn it is (--team is set from clue-flow.js) */
+#dlg{--team:var(--gold)}
+#dlg .actions:not([hidden]),#mcBox:not([hidden]){background:color-mix(in srgb,var(--team) 14%,color-mix(in srgb,var(--bg) 80%,#000));box-shadow:0 0 0 1px color-mix(in srgb,var(--team) 45%,transparent)}
+#dlg .actions button:not([hidden]),#mcBox .mco{background:linear-gradient(to bottom,color-mix(in srgb,var(--team) 38%,var(--tile)),color-mix(in srgb,var(--team) 22%,var(--tile)));border-top-color:color-mix(in srgb,var(--team) 60%,#fff)}
+#dlg .actions button:hover:not(:disabled),#mcBox .mco[role=button]:hover:not([aria-disabled=true]){background:linear-gradient(to bottom,color-mix(in srgb,var(--team) 48%,var(--tile)),color-mix(in srgb,var(--team) 30%,var(--tile)))}
+#dlg .actions button:active:not(:disabled){color:var(--team);text-shadow:0 0 12px var(--team)}
+#dlg .actions button.ok:not([hidden]),#dlg .actions button.no:not([hidden]){color:var(--ink)}
+#dlg .actions button.ok:not([hidden])::before{content:"✓";margin-right:8px;color:var(--good)}
+#dlg .actions button.no:not([hidden])::before{content:"✗";margin-right:8px;color:var(--bad)}
+#dlg .actions button.ok:active:not(:disabled),#dlg .actions button.no:active:not(:disabled){color:var(--team);text-shadow:0 0 12px var(--team)}
+#mcBox .mco.tried{opacity:.4;text-decoration:line-through;cursor:not-allowed;box-shadow:none}

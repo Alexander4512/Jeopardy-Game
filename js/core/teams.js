@@ -1,0 +1,66 @@
+// Teams: names, colors, photos
+let savedNames=[null,null,null,null],savedPhotos=[],photosOn=false,savedTColors=[],paintOn=false,adjOn=false,groupOn=true,rotPlayed=false,perksOn=false,randPerks=true,bombRetry=true,bombSkip=false,bombPeek=false,bonusOn=true,bonusMult=2,delegatePeek=false,skipOn=true,tfNoPass=true,secondOn=true,secondPct=50,onePerkTurn=true,perkThisTurn=false,bonusBoth=false,perkCfg={bomb:{on:true,qty:1,chance:20},delegate:{on:true,qty:3,chance:20}},perkCount={bomb:0,delegate:0},perkExcl={cols:new Set(),rows:new Set()},bombSet=new Set(),bombLevel=0;
+const DEFCOLORS=["#d62828","#1d4ed8","#16a34a","#facc15","#7c3aed","#ec4899","#111111","#f5f5f5","#f97316","#6b7280"];
+const lum=h=>{const n=parseInt(h.slice(1),16);return(0.299*(n>>16&255)+0.587*(n>>8&255)+0.114*(n&255))/255};
+try{const sc2=JSON.parse(localStorage.getItem("jp-tcolors")||"[]");if(Array.isArray(sc2))savedTColors=sc2.map(x=>typeof x==="string"&&/^#[0-9a-fA-F]{6}$/.test(x)?x:null);paintOn=localStorage.getItem("jp-paint")==="1";adjOn=localStorage.getItem("jp-adj")==="1";groupOn=localStorage.getItem("jp-group")!=="0";rotPlayed=localStorage.getItem("jp-rot")!=="0";perksOn=localStorage.getItem("jp-perks")==="1";randPerks=localStorage.getItem("jp-randperks")==="1";bombRetry=localStorage.getItem("jp-bombretry")!=="0";bombSkip=localStorage.getItem("jp-bombskip")==="1";bombPeek=localStorage.getItem("jp-bombpeek")==="1";if(bombSkip)bombRetry=false;bonusOn=localStorage.getItem("jp-bonus")!=="0";delegatePeek=localStorage.getItem("jp-peek")==="1";skipOn=localStorage.getItem("jp-skip")!=="0";tfNoPass=localStorage.getItem("jp-tfnopass")!=="0";secondOn=localStorage.getItem("jp-second")!=="0";const sp0=parseFloat(localStorage.getItem("jp-secondpct"));if(isFinite(sp0)&&sp0>=0&&sp0<=100)secondPct=sp0;onePerkTurn=localStorage.getItem("jp-oneperk")!=="0";bonusBoth=localStorage.getItem("jp-bonusboth")==="1";const pcf=JSON.parse(localStorage.getItem("jp-perkcfg")||"null");
+  if(pcf)["bomb","delegate"].forEach(k=>{const o=pcf[k];if(o)perkCfg[k]={on:o.on!==false,qty:Math.min(99,Math.max(0,Math.round(+o.qty)||0)),chance:Math.min(100,Math.max(0,+o.chance||0))}});
+  const pex=JSON.parse(localStorage.getItem("jp-perkexcl")||"null");
+  if(pex){perkExcl.cols=new Set((pex.cols||[]).filter(Number.isInteger));perkExcl.rows=new Set((pex.rows||[]).filter(Number.isInteger))}const bm0=parseFloat(localStorage.getItem("jp-bonusmult"));if(isFinite(bm0)&&bm0>0)bonusMult=Math.min(10,bm0)}catch(e){}
+const teamColor=i=>(teams[i]&&teams[i].color)||DEFCOLORS[i%DEFCOLORS.length];
+photosOn=false; /* team photos are removed */
+try{const sp=JSON.parse(localStorage.getItem("jp-photos")||"[]");if(Array.isArray(sp))savedPhotos=sp.map(x=>typeof x==="string"&&x.indexOf("data:image/")===0?x:null)}catch(e){}
+try{const st=JSON.parse(localStorage.getItem("jp-teams")||"null");if(Array.isArray(st)&&st.length>=2&&st.length<=10)savedNames=st.map(n=>typeof n==="string"?n:null)}catch(e){}
+UI.en.qsFriends="Friends board";UI.es.qsFriends="Tablero de amigos";UI.en.qsFriendsD="4 categories · 5 rows · mixed question types · no perks";UI.es.qsFriendsD="4 categorías · 5 filas · tipos de pregunta mezclados · sin poderes";
+UI.en.skipFirstLbl="Skipping costs points to the first team (the one that must answer)";UI.es.skipFirstLbl="Si el primer equipo pasa, pierde puntos (debe responder)";
+UI.en.skipOthersLbl="Skipping also costs points to the other teams";UI.es.skipOthersLbl="Si los demás equipos pasan, también pierden puntos";
+UI.en.mcLbl="Multiple choice: turn questions that have answer options into multiple choice (one team plays and taps an option)";UI.es.mcLbl="Opción múltiple: convertir las preguntas que tienen opciones en opción múltiple (juega un solo equipo y toca una opción)";
+UI.en.ty_img="🖼 Image · all teams at once";UI.es.ty_img="🖼 Imagen · todos a la vez";UI.en.ty_imgseq="🖼 Image · all teams, in turns";UI.es.ty_imgseq="🖼 Imagen · todos, por turnos";UI.en.ty_img1="🖼 Image · one team only";UI.es.ty_img1="🖼 Imagen · un solo equipo";
+UI.en.ty_mc="Multiple choice (one team)";UI.es.ty_mc="Opción múltiple (un equipo)";UI.en.wrongOpts="Wrong options, separated by ;";UI.es.wrongOpts="Opciones incorrectas, separadas por ;";
+UI.en.mcMinLbl="Options on the easiest row (2–6)";UI.es.mcMinLbl="Opciones en la fila más fácil (2–6)";
+UI.en.mcMaxLbl="Options on the hardest row (2–6)";UI.es.mcMaxLbl="Opciones en la fila más difícil (2–6)";
+UI.en.rqOnLbl="🎲 Random question perk (a button picks a random question from any category, with bonus points if answered correctly)";UI.es.rqOnLbl="🎲 Perk de pregunta al azar (un botón elige una pregunta al azar de cualquier categoría, con puntos extra si se responde bien)";
+UI.en.rqModeLbl="Bonus type";UI.es.rqModeLbl="Tipo de bonus";
+UI.en.rqModeMult="Multiply the question value";UI.es.rqModeMult="Multiplicar el valor de la pregunta";
+UI.en.rqModeFlat="Flat bonus (added to the value)";UI.es.rqModeFlat="Bonus fijo (se suma al valor)";
+UI.en.rqMultLbl="Multiplier (default 2 = double points)";UI.es.rqMultLbl="Multiplicador (por defecto 2 = doble)";
+UI.en.rqFlatLbl="Flat bonus points";UI.es.rqFlatLbl="Puntos de bonus fijo";
+UI.en.rqUsesLbl="Uses per team per game (0 = unlimited)";UI.es.rqUsesLbl="Usos por equipo por juego (0 = ilimitado)";
+UI.en.chOnLbl="🎯 Challenge perk (a team makes another team answer a category and/or value of its choice)";UI.es.chOnLbl="🎯 Perk de desafío (un equipo obliga a otro a responder una categoría y/o valor que elige)";
+UI.en.chModeLbl="What the challenger chooses";UI.es.chModeLbl="Qué elige el equipo que desafía";
+UI.en.chModeChoose="Challenger decides (category, value or both)";UI.es.chModeChoose="Lo decide el desafiante (categoría, valor o ambos)";
+UI.en.chModeBoth="Always category and value";UI.es.chModeBoth="Siempre categoría y valor";
+UI.en.chModeCat="Always only the category";UI.es.chModeCat="Siempre solo la categoría";
+UI.en.chModeRow="Always only the value (row)";UI.es.chModeRow="Siempre solo el valor (fila)";
+UI.en.chUsesLbl="Challenge uses per team per game (0 = unlimited)";UI.es.chUsesLbl="Usos de desafío por equipo por juego (0 = ilimitado)";
+UI.en.mqOnLbl="❓ Mystery question perk (a random question from a category that is not on the board)";UI.es.mqOnLbl="❓ Perk de pregunta misteriosa (una pregunta al azar de una categoría que no está en el tablero)";
+UI.en.mqModeLbl="Value of the mystery question";UI.es.mqModeLbl="Valor de la pregunta misteriosa";
+UI.en.mqModeChoose="The player chooses the value";UI.es.mqModeChoose="El jugador elige el valor";
+UI.en.mqModeRandom="Random value";UI.es.mqModeRandom="Valor al azar";
+UI.en.mqUsesLbl="Mystery uses per team per game (0 = unlimited)";UI.es.mqUsesLbl="Usos de pregunta misteriosa por equipo por juego (0 = ilimitado)";
+UI.en.rrOnLbl="🔁 Reroll perk (the team in turn can swap its question before answering)";UI.es.rrOnLbl="🔁 Perk de cambio de pregunta (el equipo en turno puede cambiar su pregunta antes de responder)";
+UI.en.rrModeLbl="Reroll gives";UI.es.rrModeLbl="El cambio da";
+UI.en.rrModeSame="Another question, same category and value";UI.es.rrModeSame="Otra pregunta, misma categoría y valor";
+UI.en.rrModeRandom="Same category, a random different value";UI.es.rrModeRandom="Misma categoría, otro valor al azar";
+UI.en.rrModeChoose="Same category, a different value the player chooses";UI.es.rrModeChoose="Misma categoría, otro valor que elige el jugador";
+UI.en.rrUsesLbl="Rerolls per team per game (0 = unlimited)";UI.es.rrUsesLbl="Cambios por equipo por juego (0 = ilimitado)";
+UI.en.perkRQ="🎲 Random question";UI.es.perkRQ="🎲 Pregunta al azar";UI.en.rqHint="Take a random question from any category. A correct answer earns a bonus.";UI.es.rqHint="Toma una pregunta al azar de cualquier categoría. Acertar da un bono.";
+UI.en.perkCH="🎯 Challenge";UI.es.perkCH="🎯 Desafío";UI.en.chHint="A team picks another team’s category and/or value to answer.";UI.es.chHint="Un equipo elige la categoría y/o el valor de otro equipo para responder.";
+UI.en.perkMQ="❓ Mystery question";UI.es.perkMQ="❓ Pregunta misteriosa";UI.en.mqHint="A random question from a category that is not on the board.";UI.es.mqHint="Una pregunta al azar de una categoría que no está en el tablero.";
+UI.en.perkRR="🔁 Reroll";UI.es.perkRR="🔁 Cambio de pregunta";UI.en.rrHint="Swap the question for another one before answering.";UI.es.rrHint="Cambia la pregunta por otra antes de responder.";
+UI.en.b2Hint="Board 2 is played as stage 2 when the 🆕 new board stage button is on.";UI.es.b2Hint="El tablero 2 se juega como etapa 2 cuando el botón de etapa 🆕 tablero nuevo está activado.";
+UI.en.subSize="📐 Board size";UI.es.subSize="📐 Tamaño del tablero";UI.en.dimColsHint="Categories across the top";UI.es.dimColsHint="Categorías en la parte superior";UI.en.dimRowsHint="Questions per category";UI.es.dimRowsHint="Preguntas por categoría";UI.en.subCols="🧱 Columns & questions";UI.es.subCols="🧱 Columnas y preguntas";UI.en.subPool="🏷 Category pool";UI.es.subPool="🏷 Categorías disponibles";UI.en.subTools="🧰 Tools";UI.es.subTools="🧰 Herramientas";
+UI.en.subSizeHint="Choose how many columns and rows the board has.";UI.es.subSizeHint="Elegí cuántas columnas y filas tiene el tablero.";
+UI.en.subRowsH="Rows";UI.es.subRowsH="Filas";UI.en.subResetH="Start over";UI.es.subResetH="Empezar de nuevo";
+UI.en.catsHint="Choose which categories can appear in random boards (the ‹ › arrows and the bomb). Categories already on the board are not removed. You can also create your own.";UI.es.catsHint="Elegí qué categorías pueden aparecer en tableros al azar (flechas ‹ › y bomba). Las que ya están en el tablero no se quitan. También podés crear las tuyas.";
+UI.en.stSec="➕ Stages";UI.es.stSec="➕ Etapas";
+UI.en.stRowOnLbl="Stage button: ➕ Add row";UI.es.stRowOnLbl="Botón de etapa: ➕ Agregar fila";UI.en.stColOnLbl="Stage button: ➕ Add column";UI.es.stColOnLbl="Botón de etapa: ➕ Agregar columna";UI.en.stBdOnLbl="Stage button: 🆕 New board (stage 2)";UI.es.stBdOnLbl="Botón de etapa: 🆕 Tablero nuevo (etapa 2)";
+UI.en.stOnLbl="Extra stage: when the board is finished, add a second stage (new board, column or row)";UI.es.stOnLbl="Etapa extra: al terminar el tablero, agregar una segunda etapa (tablero, columna o fila nuevos)";
+UI.en.stModeLbl="Default stage 2";UI.es.stModeLbl="Etapa 2 por defecto";
+UI.en.stMBoard="A whole new board";UI.es.stMBoard="Un tablero nuevo completo";
+UI.en.stMCol="Add one column";UI.es.stMCol="Agregar una columna";
+UI.en.stMRow="Add one row";UI.es.stMRow="Agregar una fila";
+UI.en.stMultLbl="Value multiplier for stage 2";UI.es.stMultLbl="Multiplicador de valores en la etapa 2";
+UI.en.stMultOnLbl="Multiply the values in stage 2";UI.es.stMultOnLbl="Multiplicar los valores en la etapa 2";
+UI.en.stSkipLbl="Allow starting stage 2 early (buttons also appear during stage 1, not only when it ends)";UI.es.stSkipLbl="Permitir empezar la etapa 2 antes (los botones también aparecen durante la etapa 1, no solo al terminar)";
+UI.en.stSkipBtn="⏭ Skip to stage 2";UI.es.stSkipBtn="⏭ Saltar a la etapa 2";
+UI.en.seeNext="➕ Start stage 2";UI.es.seeNext="➕ Empezar etapa 2";

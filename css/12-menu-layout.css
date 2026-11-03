@@ -1,0 +1,52 @@
+/* Menu layout, responsive rules and density */
+/* ---- menu: one size for every tab, easy to read ---- */
+.menu{display:flex;flex-direction:column;gap:14px;width:100%;min-width:0;height:min(94vh,1000px);max-height:none;overflow:hidden;padding:24px 34px}
+.menu h2{flex:none;margin:0;font-size:1.5rem}
+.menu .tabs{flex:none;gap:4px}
+.menu .tabs button{padding:10px 16px;font-size:1rem}
+.menu>.panel{flex:1 1 auto;min-height:0;overflow-y:auto;gap:6px;padding:4px 10px 10px 2px}
+.menu>.actions{flex:none;justify-content:flex-end;padding-top:6px}
+.menu .panel>label,.menu .colors>label,.menu .diffbox>label{padding:11px 0;border-bottom:1px solid var(--line);gap:18px;font-size:1rem}
+.menu label>span{flex:1 1 auto;min-width:0;line-height:1.35}
+.menu label>select,.menu label>input:not([type=checkbox]),.menu label>.row{flex:none}
+.menu label>select,.menu input[type=number]{min-width:130px;max-width:50%}
+.menu .hint{font-size:.92rem;line-height:1.45}
+.menu .colors,.menu .diffbox{gap:0;padding:6px 0}
+.menu .colors>.hint{font-weight:800;color:var(--ink);font-size:1rem;margin:12px 0 2px}
+.menu .names{display:grid;gap:8px;padding:8px 0}
+.menu .names .nrow{margin-top:0}
+.menu .panel>.ghost,.menu .diffbox>.ghost,.menu .colors>.ghost{justify-self:start;margin-top:10px}
+.menu .panel>div>.ghost{margin-top:8px}
+.hist{max-height:none;overflow:visible}
+.menu .panel>.hint:first-child{margin:2px 0 6px}
+
+/* ---- fixes from browser testing ---- */
+.menu .colors>.hint{font-weight:400;color:var(--muted);font-size:.92rem;margin:4px 0}
+.menu .colors>.hint:first-child,.menu .colors>.hint.sub{font-weight:800;color:var(--ink);font-size:1rem;margin:12px 0 2px}
+.menu>.panel{grid-template-columns:minmax(0,1fr)}
+.menu .ed input,.menu .ed select,.menu .qrow input,.menu .qrow select,.menu .rowdef input,.menu .rowdef select{min-width:0;max-width:none}
+.menu .tabs button{padding:10px 11px;font-size:.96rem}
+.qrow [data-f="type"]{flex:1 1 190px}
+@media (max-width:640px){
+  .rowdef{grid-template-columns:56px 1fr 1fr}
+  .rowdef>select{grid-column:1/-1}
+  .menu{padding:18px 16px}
+}
+@media (max-width:560px){
+  .cat{padding:4px;gap:2px}
+  .arrow{padding:6px 3px;font-size:1.15em}
+  .catmid{font-size:.9em}
+}
+.menu .dims label{flex:1 1 150px}
+.menu .dims select{width:auto;flex:none}
+@media (max-width:700px){.board{--colmin:84px;overflow-x:auto;padding-bottom:6px}}
+.cat{min-width:0}
+.catmid{overflow-wrap:break-word;word-break:normal;hyphens:auto}
+.tile{min-width:0}
+@media (min-width:701px){
+  .board[data-dense="1"] .tile{font-size:clamp(.95rem,2.6vw,1.6rem)}
+  .board[data-dense="1"] .cat{font-size:clamp(.7rem,1.5vw,.95rem)}
+  .board[data-dense="2"] .tile{font-size:clamp(.75rem,1.8vw,1.2rem)}
+  .board[data-dense="2"] .cat{font-size:clamp(.6rem,1.15vw,.82rem);padding:4px 2px}
+  .board[data-dense="1"] .arrow,.board[data-dense="2"] .arrow{padding:4px 2px;font-size:1em}
+}

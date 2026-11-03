@@ -1,0 +1,12 @@
+/* Plus buttons in the menus — design adapted from Uiverse.io by OnCloud125252, coloured with the game palette */
+.menu .dimcard .stepbtn,.menu .addrow,.menu .cn-add{--plus_side:2.5rem;--plus_tri:0;position:relative;overflow:hidden;isolation:isolate;border:1px solid var(--gold);border-radius:0;background:var(--bg);color:var(--gold);cursor:pointer;transform:none}
+.menu .dimcard .stepbtn{display:flex;justify-content:center;align-items:center;width:var(--plus_side);height:var(--plus_side);padding:0;min-width:0}
+.menu .dimcard .stepbtn::before,.menu .addrow::before,.menu .cn-add::before{content:"";position:absolute;top:0;right:0;z-index:-1;width:0;height:0;border-style:solid;border-width:0 var(--plus_tri) var(--plus_tri) 0;border-color:transparent var(--gold) transparent transparent;transition:border-width .2s ease-in-out}
+.menu .dimcard .stepbtn:hover:not(:disabled)::before,.menu .dimcard .stepbtn:focus-visible::before{--plus_tri:calc(var(--plus_side) * 2)}
+.menu .addrow:hover::before,.menu .addrow:focus-visible::before,.menu .cn-add:hover::before,.menu .cn-add:focus-visible::before{--plus_tri:100vw}
+.menu .dimcard .stepbtn .plusIcon{fill:var(--ink);width:calc(var(--plus_side) * .7);height:calc(var(--plus_side) * .7);transition:all .2s ease-in-out}
+.menu .dimcard .stepbtn:hover:not(:disabled) .plusIcon,.menu .dimcard .stepbtn:focus-visible .plusIcon{fill:var(--bg);transform:rotate(180deg)}
+.menu .addrow,.menu .cn-add{transition:color .2s ease-in-out}
+.menu .addrow:hover,.menu .addrow:focus-visible,.menu .cn-add:hover,.menu .cn-add:focus-visible{color:var(--bg);background:var(--bg);transform:none}
+.menu .dimcard .stepbtn:disabled{opacity:.35;cursor:not-allowed}
+:root[data-calm="1"] .menu .dimcard .stepbtn::before,:root[data-calm="1"] .menu .addrow::before,:root[data-calm="1"] .menu .cn-add::before,:root[data-calm="1"] .menu .plusIcon{transition:none!important}

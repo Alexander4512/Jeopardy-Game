@@ -1,0 +1,16 @@
+/* Stage buttons, stage tag, random-team picker, idle hint */
+#stBtns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center}
+#stBtns[hidden]{display:none}
+#stBtns button[hidden]{display:none}
+#stBtns button{font-family:var(--f-head);font-weight:800;letter-spacing:.03em;font-size:1rem;padding:11px 22px;border-radius:999px;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s}
+#stRow,#stCol{color:var(--gold);background:var(--tile);border:2px solid color-mix(in srgb,var(--gold) 55%,transparent);box-shadow:0 4px 0 rgba(0,0,0,.28)}
+#stRow:hover,#stCol:hover{background:var(--tile-hover)}
+#stSkip{border:0;color:#1a1a2e;background:linear-gradient(135deg,var(--gold),#FFB347);box-shadow:0 4px 0 rgba(0,0,0,.28),0 0 22px color-mix(in srgb,var(--gold) 45%,transparent)}
+#stBtns button:hover{transform:translateY(-2px)}
+#stBtns button:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.28)}
+#stBtns button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){#stBtns button{transition:none}}
+#stageTag{display:inline-block;justify-self:center;margin:6px auto 2px;padding:6px 16px;border-radius:999px;background:var(--tile);border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);font-family:var(--f-head);letter-spacing:.04em}
+#stageTag[hidden]{display:none}
+#seeRes{padding:12px 22px;font-size:1.05rem;font-weight:800;border-radius:999px;background:var(--gold);color:#1a1a2e;border:0;cursor:pointer}#seeRes[hidden]{display:none}#pickBox{position:relative;display:grid;gap:6px;justify-items:center;padding:14px 40px 10px;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);box-shadow:0 4px 18px rgba(0,0,0,.18)}#pickBox[hidden]{display:none}#pickX{position:absolute;top:4px;right:8px;background:transparent;border:0;color:var(--ink);font-size:1.5rem;line-height:1;cursor:pointer;opacity:.8}#pickX:hover{opacity:1}#pickTip{margin:0;font-size:.95rem;opacity:.85}#pickMsg{margin:0;min-height:0;font-weight:800;font-size:1.05rem;color:var(--gold);min-height:1.2em}#idleHint{display:flex;align-items:center;gap:12px;margin:0;font-size:1.15rem;font-weight:800;padding:10px 18px;border-radius:14px;border:2px solid var(--gold);background:rgba(255,255,255,.08);animation:idlein .4s}#idleHint[hidden]{display:none}#idleX{background:transparent;border:0;color:var(--ink);font-size:1.5rem;line-height:1;cursor:pointer;padding:0 4px;opacity:.8}#idleX:hover{opacity:1}
+@keyframes idlein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}

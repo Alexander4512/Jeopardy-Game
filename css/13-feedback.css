@@ -1,0 +1,12 @@
+/* Warning banner, colored messages, invalid fields */
+/* warning banner: red so it stands out */
+.warn{background:color-mix(in srgb,#e53935 40%,var(--panel));border:2px solid #ff5252;border-left-width:8px}
+.warn p{font-weight:700}
+.warn .hint{font-weight:400}
+/* colored messages: red = error, yellow = needs attention, blue = working, green = done */
+.hint.msg-err,.hint.msg-warn,.hint.msg-info,.hint.msg-ok{color:var(--ink);font-weight:700;padding:9px 12px;border-radius:10px;border-left:6px solid;margin:6px 0}
+.hint.msg-err{background:color-mix(in srgb,#e53935 30%,transparent);border-color:#ff5252}
+.hint.msg-warn{background:color-mix(in srgb,#ffb300 28%,transparent);border-color:#ffb300}
+.hint.msg-info{background:color-mix(in srgb,#4c8dff 24%,transparent);border-color:#4c8dff}
+.hint.msg-ok{background:color-mix(in srgb,#2fbf71 26%,transparent);border-color:#2fbf71}
+.ed input.bad{border-color:#ff5252!important;box-shadow:0 0 0 3px rgba(255,82,82,.45)}

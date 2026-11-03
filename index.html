@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jeopardy Amigos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Oswald:wght@500;700&family=Bitter:wght@500;700&family=Nunito:wght@500;700;800&family=Comic+Neue:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/01-tokens.css">
+<link rel="stylesheet" href="css/02-menu-base.css">
+<link rel="stylesheet" href="css/03-base.css">
+<link rel="stylesheet" href="css/04-board.css">
+<link rel="stylesheet" href="css/05-clue-dialog.css">
+<link rel="stylesheet" href="css/06-gameplay.css">
+<link rel="stylesheet" href="css/07-quickstart-final.css">
+<link rel="stylesheet" href="css/08-menu-buttons.css">
+<link rel="stylesheet" href="css/09-stages-picker.css">
+<link rel="stylesheet" href="css/10-editor-and-pool.css">
+<link rel="stylesheet" href="css/11-results-misc.css">
+<link rel="stylesheet" href="css/12-menu-layout.css">
+<link rel="stylesheet" href="css/13-feedback.css">
+<link rel="stylesheet" href="css/14-question-extras.css">
+<link rel="stylesheet" href="css/15-effects.css">
+<link rel="stylesheet" href="css/16-menu-button.css">
+<link rel="stylesheet" href="css/17-perk-card.css">
+<link rel="stylesheet" href="css/18-neo-switch.css">
+<link rel="stylesheet" href="css/19-vertical-menu.css">
+<link rel="stylesheet" href="css/20-menu-unified.css">
+<link rel="stylesheet" href="css/21-answer-keys.css">
+<link rel="stylesheet" href="css/22-plus-button.css">
+<link rel="stylesheet" href="css/23-to-top.css">
+<link rel="stylesheet" href="css/24-pick-anim.css">
+<link rel="stylesheet" href="css/25-blob-button.css">
+<link rel="stylesheet" href="css/26-animated-bg.css">
+<link rel="stylesheet" href="css/27-cyberpunk.css">
+<link rel="stylesheet" href="css/28-title-pop.css">
+<link rel="stylesheet" href="css/29-start-page.css">
+<link rel="stylesheet" href="css/30-roll-button.css">
+</head>
+<body>
+<main>
+  <header>
+    <div class="title"><h1>JEOPARDY!</h1></div>
+    <div class="round-mid"><span class="round" id="roundLbl"></span><span class="round" id="bombLbl" hidden></span></div>
+    <div class="row">
+      <button class="home-btn" id="homeBtn" type="button" aria-label="Start page" title="Start page">🏠</button>
+      <button class="menubtn" id="menuBtn" type="button"><span class="mb-icon"><svg viewBox="0 0 175 80" width="40" height="40" aria-hidden="true"><rect width="80" height="15" fill="#f0f0f0" rx="10"></rect><rect y="30" width="80" height="15" fill="#f0f0f0" rx="10"></rect><rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect></svg></span><span class="mb-text" data-i18n="menu"></span></button>
+    </div>
+  </header>
+  <div class="warn" id="warnBar" role="status" hidden>
+    <p id="warnTxt"></p>
+    <div class="row">
+      <button class="ghost" id="warnAdd"></button>
+      <button class="ghost" id="warnChoose"></button>
+      <button class="ghost" id="warnRemoveRnd"></button>
+      <button class="ghost" id="warnRemove"></button>
+      <button class="ghost" id="warnIgnore" data-i18n="ignore"></button>
+      <button class="ghost" id="warnReset" data-i18n="clearSel" hidden></button>
+      <button class="ghost" id="warnConfirm" data-i18n="confirm" hidden></button>
+      <button class="ghost" id="warnCancel" data-i18n="cancel" hidden></button>
+    </div>
+    <p class="hint" id="warnMsg"></p>
+  </div>
+  <div class="restrict" id="restrictBar" hidden></div>
+  <div class="perks" id="mqBar" hidden><span class="hint">Perk:</span><button class="ghost" id="mqBtn" type="button"></button><span class="hint" id="mqMsg" role="status"></span></div>
+  <div class="perks" id="chBar" hidden><span class="hint">Perk:</span><button class="ghost" id="chBtn" type="button"></button><span class="hint" id="chMsg" role="status"></span></div>
+  <div class="perks" id="rqBar" hidden><span class="hint" id="rqHint"></span><button class="ghost" id="rqBtn" type="button"></button><span class="hint" id="rqMsg" role="status"></span></div>
+  <div class="perks" id="perksBar" hidden>
+    <span class="hint" data-i18n="perks"></span>
+    <button class="ghost" id="bombBtn"></button>
+    <span class="hint" id="perkMsg" role="status"></span>
+  </div>
+  <div id="stageTag" class="hint" hidden style="text-align:center;font-weight:800;color:var(--gold)"></div><div class="board" id="board" role="grid"></div>
+  <div class="teams" id="teams"></div>
+  <div class="team-perks" id="teamPerks" hidden></div>
+  <div id="underBoard"><button type="button" id="seeRes" hidden></button><div id="stBtns" hidden><button type="button" id="stRow"></button><button type="button" id="stCol"></button><button type="button" id="stSkip"></button></div><div id="pickBox" hidden><button type="button" id="rndPick" class="roll-btn"><span class="roll-die" aria-hidden="true">🎲</span><span class="inner"></span></button><button type="button" id="pickX" aria-label="Close">×</button><p id="pickMsg" role="status"></p><p id="pickTip"></p></div><div id="idleHint" role="status" hidden><span id="idleTxt"></span><button type="button" id="idleX" aria-label="Close">×</button></div><div class="undo-row"><button class="to-top hist-btn" id="undoBtn" type="button" disabled><svg class="svgIcon ic-undo" viewBox="0 0 384 512" aria-hidden="true"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg><span data-i18n="undoShort"></span></button><button class="to-top hist-btn" id="redoBtn" type="button" disabled><span data-i18n="redoShort"></span><svg class="svgIcon ic-redo" viewBox="0 0 384 512" aria-hidden="true"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg></button></div></div>
+</main>
+<input type="file" id="photoIn" accept="image/*" hidden>
+
+<dialog id="qsDlg" aria-labelledby="qsH"><form method="dialog" class="card qs" id="qsForm">
+  <div class="qs-hero"><div class="qs-logo" aria-hidden="true">JEOPARDY!</div><h2 id="qsH"></h2><p class="qs-subt" id="qsSubT"></p></div>
+  <section class="qs-col qs-teams">
+    <div class="qsl" id="qsT"></div><div class="qsrow" id="qsCount"></div>
+    <div class="qsl" id="qsN"></div><div id="qsNames"></div>
+  </section>
+  <section class="qs-col qs-setup">
+    <div class="qsl" id="qsPreL"></div><div class="qsgrid" id="qsPre"></div>
+    <div class="qsl" id="qsDiffL"></div><div class="qsrow" id="qsDiffB"></div><p id="qsDiffInfo" role="status"></p>
+    <select id="qsDiff" hidden></select>
+  </section>
+  <section class="qs-col qs-cats" id="qsCats">
+    <div class="qsc-head"><div class="qsl" id="qsCatT"></div><div class="qsc-tools"><span id="qsCatCount" class="qsc-count"></span><button type="button" class="ghost" id="qsCatAll"></button></div></div>
+    <p class="qsc-sub" id="qsCatSub"></p>
+    <div class="qsc-grid" id="qsCatGrid"></div>
+    <p class="qsc-msg" id="qsCatMsg" role="status"></p>
+    <div id="qsCatAdd"></div>
+  </section>
+  <div class="qs-foot">
+    <button type="button" id="qsBack" class="ghost" hidden></button>
+    <button type="button" id="qsCfg" class="ghost"></button>
+    <button type="submit" id="qsGo" class="go-btn"><span class="go-in"><span class="go-play" aria-hidden="true">▶</span><span class="go-txt" id="qsGoT"></span></span></button>
+    <p id="qsNote" class="qsnote"></p>
+  </div>
+</form></dialog>
+<dialog id="dlg" aria-labelledby="clue">
+  <div class="card">
+    <button class="x" id="closeClue">×</button>
+    <div class="meta" id="meta"></div>
+    <div id="rqNote" hidden></div>
+    <div class="clue" id="clue"></div>
+    <img id="clueImg" alt="" hidden style="max-width:100%;max-height:34vh;border-radius:10px;margin:6px auto;display:block">
+    <div class="answer" id="answer" hidden></div>
+    <div id="mcBox" class="mc" hidden></div>
+    <div class="turn" id="turn"></div>
+    <div id="trow"><div class="timer" id="timer" hidden></div>
+    <div id="tbox" hidden><div id="tbar"><i></i></div></div></div>
+    <div class="group" id="group" hidden>
+      <div class="grows" id="groupRows"></div>
+      <div class="actions"><button type="button" class="skip" id="pauseBtn2" hidden></button><button id="groupReveal" data-i18n="groupReveal"></button></div>
+    </div>
+    <div class="actions" id="perkActs" hidden></div>
+    <div class="actions" id="act-score">
+      <button class="ok" id="right" data-i18n="right"></button>
+      <button class="no" id="wrong" data-i18n="wrong"></button>
+    </div>
+    <div class="actions" id="act-end" hidden><button id="cont" data-i18n="cont"></button></div>
+    <div class="actions" id="act-reveal"><button type="button" class="skip" id="pauseBtn" hidden></button><button id="reveal" data-i18n="reveal"></button><button class="skip" id="skip" data-i18n="skip"></button><button class="skip" id="rrBtn" type="button" hidden></button></div>
+    <p id="skipNote" style="margin:6px 0 0;font-size:.95rem;line-height:1.4;opacity:.92;text-align:center"></p>
+  </div>
+</dialog>
+
+<dialog id="chDlg" aria-labelledby="chH"><div class="card" style="text-align:left;min-height:0"><h2 id="chH" style="margin:0;color:var(--gold)"></h2><div id="chBody" style="display:grid;gap:12px"></div><p id="chErr" class="hint" style="color:var(--bad);margin:0"></p><div class="actions"><button id="chOk" type="button"></button><button id="chCancel" class="skip" type="button"></button></div></div></dialog>
+<dialog id="finDlg" aria-labelledby="finH"><div class="card fin"><h2 id="finH"></h2><div id="finBody"></div></div></dialog>
+<dialog id="resDlg" aria-labelledby="resTitle">
+  <div class="card res">
+    <h2 id="resTitle" data-i18n="gameOver"></h2>
+    <div class="wname" id="resWinner"></div>
+    <ol class="ranking" id="resList"></ol>
+    <div class="actions"><button id="resNew" data-i18n="reset"></button><button id="resClose" class="skip" data-i18n="close"></button></div>
+  </div>
+</dialog>
+
+<dialog id="menuDlg">
+  <div class="menu">
+    <div class="row" style="justify-content:space-between;align-items:center"><h2 data-i18n="menu"></h2><input type="search" id="menuSearch" autocomplete="off" aria-label="Search"><button class="ghost" id="modeBtn" type="button"></button></div>
+    <div class="tabs" role="tablist">
+      <span class="tab-indicator" aria-hidden="true"></span>
+      <button role="tab" id="tabGame" aria-selected="true" aria-controls="panelGame" data-i18n="tabGame"></button>
+      <button role="tab" id="tabEdit" aria-selected="false" aria-controls="panelEdit" data-i18n="edit"></button>
+      <button role="tab" id="tabCats" hidden aria-selected="false" aria-controls="panelCats" data-i18n="tabCats"></button>
+      <button role="tab" id="tabPerks" aria-selected="false" aria-controls="panelPerks" data-i18n="tabPerks"></button>
+      <button role="tab" id="tabHist" aria-selected="false" aria-controls="panelHist" data-i18n="tabHist"></button>
+      <button role="tab" id="tabLook" aria-selected="false" aria-controls="panelLook" data-i18n="tabLook"></button>
+    </div>
+    <div class="panel" id="searchRes" role="region" aria-live="polite" hidden></div>
+    <div class="panel" id="panelGame" role="tabpanel" aria-labelledby="tabGame">
+      <section class="grp"><h3 data-i18n="secDiff"></h3>
+        <div class="diffbox">
+          <label><span data-i18n="diff"></span><select id="diffSel"></select></label>
+          <label><span data-i18n="dTimer"></span><input type="number" id="dTime" min="0" max="600" step="1"></label>
+          <label><span data-i18n="dPen"></span><input type="checkbox" id="dPenChk"></label>
+          <label><span data-i18n="dMult"></span><input type="number" id="dMult" min="0" max="10" step="any"></label>
+          <p class="hint" id="diffInfo"></p>
+          <button class="ghost" id="diffReset" data-i18n="dReset"></button>
+        </div>
+      </section>
+      <section class="grp"><h3 data-i18n="secTeams"></h3>
+        <label><span data-i18n="teamsN"></span><select id="teamsSel"></select></label>
+        <p class="hint" id="teamMsg" role="status"></p>
+        <label><span data-i18n="auto"></span><input type="checkbox" id="autoChk"></label>
+        <label hidden><span data-i18n="photosOn"></span><input type="checkbox" id="photoChk"></label>
+        <label><span data-i18n="paintOn"></span><input type="checkbox" id="paintChk"></label>
+        <label><span data-i18n="adjOn"></span><input type="checkbox" id="adjChk"></label>
+        <div class="names" id="nameList"></div>
+        <div class="btnpair"><button class="ghost" id="rndColors" data-i18n="randColors"></button>
+        <button class="ghost" id="defColors" data-i18n="defColors"></button></div>
+        <div><button class="ghost" id="rndBtn" data-i18n="random"></button><p class="hint" id="rndMsg" role="status" hidden></p></div>
+      </section>
+      <section class="grp"><h3 data-i18n="secQs"></h3>
+        <div class="diffbox">
+          <p class="hint" id="qStatus"></p>
+          <div class="row" id="qBtns">
+            <button class="ghost" id="qAdd"></button>
+            <button class="ghost" id="qChoose"></button>
+            <button class="ghost" id="qRemoveRnd"></button>
+            <button class="ghost" id="qRemove"></button>
+          </div>
+        </div>
+        <label><span data-i18n="groupOn"></span><input type="checkbox" id="groupChk"></label>
+        <label><span data-i18n="skipOnLbl"></span><input type="checkbox" id="skipChk"></label>
+        <label><span data-i18n="mcPassLbl"></span><input type="checkbox" id="mcPassChk"></label>
+        <label class="adv"><span data-i18n="mcLbl"></span><input type="checkbox" id="mcChk"></label>
+        <label class="adv"><span data-i18n="mcMinLbl"></span><input type="number" id="mcMinNum" min="2" max="6" step="1"></label>
+        <label class="adv"><span data-i18n="mcMaxLbl"></span><input type="number" id="mcMaxNum" min="2" max="6" step="1"></label>
+        <label class="adv"><span data-i18n="skipFirstLbl"></span><input type="checkbox" id="skipFirstChk"></label>
+        <label class="adv"><span data-i18n="skipOthersLbl"></span><input type="checkbox" id="skipOthersChk"></label>
+        <label><span data-i18n="tfNoPassLbl"></span><input type="checkbox" id="tfChk"></label>
+        <label><span data-i18n="secondLbl"></span><input type="checkbox" id="secondChk"></label>
+        <label><span data-i18n="secondPctLbl"></span><input type="number" id="secondNum" min="0" max="100" step="5"></label>
+        <label><span data-i18n="rotPlayedOn"></span><input type="checkbox" id="rotChk"></label>
+      </section>
+      <section class="grp adv"><h3 data-i18n="stSec"></h3>
+        <label class="adv"><span data-i18n="stRowOnLbl"></span><input type="checkbox" id="stK-row"></label>
+        <label class="adv"><span data-i18n="stColOnLbl"></span><input type="checkbox" id="stK-col"></label>
+        <label class="adv"><span data-i18n="stBdOnLbl"></span><input type="checkbox" id="stK-board"></label>
+        
+        <label class="adv"><span data-i18n="stSkipLbl"></span><input type="checkbox" id="stSkipChk"></label>
+        <label class="adv"><span data-i18n="stMultOnLbl"></span><input type="checkbox" id="stMultChk"></label>
+        <label class="adv"><span data-i18n="stMultLbl"></span><input type="number" id="stMultNum" min="0.5" max="10" step="0.5"></label>
+      </section>
+      <section class="grp"><h3 data-i18n="secFinal"></h3>
+        <label><span data-i18n="finLbl"></span><input type="checkbox" id="finChk"></label>
+      </section>
+      <section class="grp"><h3 data-i18n="secPick"></h3>
+        <label><span data-i18n="pickLbl"></span><input type="checkbox" id="pickChk"></label>
+      </section>
+    <section class="grp"><h3 data-i18n="secGameData"></h3>
+        <div class="row" style="gap:10px;flex-wrap:wrap"><button class="ghost" id="startPageBtn" type="button" data-i18n="startPageLbl"></button><button class="ghost" id="reset" type="button"></button></div>
+      </section>
+    </div>
+    <div class="panel ed" id="panelEdit" role="tabpanel" aria-labelledby="tabEdit" hidden>
+      <nav class="subtabs" id="edSub" role="tablist">
+        <button type="button" role="tab" data-sub="size" aria-selected="true" data-i18n="subSize"></button>
+        <button type="button" role="tab" data-sub="cols" aria-selected="false" data-i18n="subCols"></button>
+        <button type="button" role="tab" data-sub="pool" aria-selected="false" data-i18n="subPool"></button>
+        <button type="button" role="tab" data-sub="tools" aria-selected="false" data-i18n="subTools"></button>
+      </nav>
+      <datalist id="catOpts"></datalist>
+      <div class="subpanel" data-sub="size">
+        <p class="hint" data-i18n="subSizeHint"></p>
+        <div class="dims">
+          <div class="dimcard" data-for="colsSel"><div class="dimtop"><span class="dimico">↔</span><div><strong data-i18n="colsN"></strong><small data-i18n="dimColsHint"></small></div></div><div class="stepper"><button type="button" class="stepbtn" data-d="-1" aria-label="−"><svg class="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" aria-hidden="true"><path d="M6.25 13.75H23.75V16.25H6.25Z"></path></svg></button><output class="stepval" id="colsVal">5</output><button type="button" class="stepbtn" data-d="1" aria-label="+"><svg class="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" aria-hidden="true"><path d="M13.75 23.75V16.25H6.25V13.75H13.75V6.25H16.25V13.75H23.75V16.25H16.25V23.75H13.75Z"></path></svg></button></div><select id="colsSel" hidden></select></div>
+          <div class="dimcard" data-for="rowsSel"><div class="dimtop"><span class="dimico">↕</span><div><strong data-i18n="rowsN"></strong><small data-i18n="dimRowsHint"></small></div></div><div class="stepper"><button type="button" class="stepbtn" data-d="-1" aria-label="−"><svg class="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" aria-hidden="true"><path d="M6.25 13.75H23.75V16.25H6.25Z"></path></svg></button><output class="stepval" id="rowsVal">5</output><button type="button" class="stepbtn" data-d="1" aria-label="+"><svg class="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" aria-hidden="true"><path d="M13.75 23.75V16.25H6.25V13.75H13.75V6.25H16.25V13.75H23.75V16.25H16.25V23.75H13.75Z"></path></svg></button></div><select id="rowsSel" hidden></select></div>
+        </div>
+        <div class="gridprev" id="gridPrev" aria-hidden="true"></div>
+        <div id="edRows" hidden></div>
+      </div>
+      <div class="subpanel" data-sub="cols" hidden>
+        <div class="colhead" id="colHead"><div class="boardsw" id="boardSw" role="tablist"></div><div class="colnav" id="colNav" role="tablist"></div></div>
+        <div id="edCats"></div>
+      </div>
+      <div class="subpanel" data-sub="pool" hidden>
+        <p class="hint" data-i18n="catsHint"></p>
+        <p class="hint" id="catMsg" role="status"></p>
+        <div id="catList"></div>
+      </div>
+      <div class="subpanel" data-sub="tools" hidden>
+        <section class="grp"><h3 data-i18n="typesTitle"></h3>
+          <label><span data-i18n="typePctLbl"></span><input type="number" id="typePct" min="0" max="100" step="5" value="40"></label>
+          <div class="actions"><button class="skip" id="typeRandBtn" data-i18n="typeRandBtn"></button></div>
+        </section>
+        <section class="grp adv"><h3 data-i18n="csvBtn"></h3>
+          <p class="hint" data-i18n="csvHint"></p>
+          <div class="actions"><button class="skip" id="csvBtn" data-i18n="csvBtn"></button></div><input type="file" id="csvIn" accept=".csv,text/csv,text/plain" hidden>
+        </section>
+        <section class="grp"><h3 data-i18n="subResetH"></h3>
+          <div class="actions"><button id="defBtn" class="skip" data-i18n="defaults"></button></div>
+        </section>
+      </div>
+      <div class="actions edfoot">
+        <p class="hint" id="edMsg" role="status"></p>
+        <button id="genBtn" data-i18n="gen" hidden></button>
+        <button id="genEmptyBtn" data-i18n="genEmptyBtn" hidden></button>
+        <button id="applyBtn" data-i18n="apply"></button>
+        <button id="cancelBtn" class="skip" data-i18n="cancel"></button>
+      </div>
+    </div>
+    <div class="panel" id="panelCats" role="tabpanel" aria-labelledby="tabCats" hidden></div>
+    <div class="panel" id="panelPerks" role="tabpanel" aria-labelledby="tabPerks" hidden>
+      <p class="hint" data-i18n="perksHint"></p>
+      <section class="grp" id="perkCards"><h3 data-i18n="perkQuick"></h3>
+        <div class="perk-cards">
+          <div class="perk-card"><label class="perk-tile"><input class="perk-input" type="checkbox" id="pkOn_bomb"><span class="perk-face"><span class="perk-icon" aria-hidden="true">💣</span><span class="perk-label" data-i18n="pkn_bomb"></span></span></label></div>
+          <div class="perk-card"><label class="perk-tile"><input class="perk-input" type="checkbox" id="pkOn_delegate"><span class="perk-face"><span class="perk-icon" aria-hidden="true">🤝</span><span class="perk-label" data-i18n="pkn_del"></span></span></label></div>
+          <div class="perk-card"><label class="perk-tile"><input class="perk-input" type="checkbox" id="ddOn"><span class="perk-face"><span class="perk-icon" aria-hidden="true">⭐</span><span class="perk-label" data-i18n="pkn_dd"></span></span></label></div>
+          <div class="perk-card"><label class="perk-tile adv"><input class="perk-input" type="checkbox" id="rqChk"><span class="perk-face"><span class="perk-icon" aria-hidden="true">🎲</span><span class="perk-label" data-i18n="pkn_rq"></span></span></label></div>
+          <div class="perk-card"><label class="perk-tile adv"><input class="perk-input" type="checkbox" id="chChk"><span class="perk-face"><span class="perk-icon" aria-hidden="true">🎯</span><span class="perk-label" data-i18n="pkn_ch"></span></span></label></div>
+          <div class="perk-card"><label class="perk-tile adv"><input class="perk-input" type="checkbox" id="mqChk"><span class="perk-face"><span class="perk-icon" aria-hidden="true">❓</span><span class="perk-label" data-i18n="pkn_mq"></span></span></label></div>
+          <div class="perk-card"><label class="perk-tile adv"><input class="perk-input" type="checkbox" id="rrChk"><span class="perk-face"><span class="perk-icon" aria-hidden="true">🔁</span><span class="perk-label" data-i18n="pkn_rr"></span></span></label></div>
+        </div>
+      </section>
+      <section class="grp"><h3 data-i18n="secGen"></h3>
+        <label><span data-i18n="perksOn"></span><input type="checkbox" id="perksChk"></label>
+        <label><span data-i18n="randPerks"></span><input type="checkbox" id="randChk"></label>
+        <label><span data-i18n="onePerkLbl"></span><input type="checkbox" id="oneChk"></label>
+      </section>
+      <section class="grp perk p-bomb"><h3 data-i18n="perkBomb"></h3>
+        <label><span data-i18n="pkQtyBomb"></span><input type="number" id="pkQty_bomb" min="0" max="99" step="1"></label>
+        <label><span data-i18n="pkChance"></span><input type="number" id="pkCh_bomb" min="0" max="100" step="5"></label>
+        <p class="hint" data-i18n="bombFixedHint"></p>
+        <span class="hint sub" data-i18n="afterBomb"></span>
+        <label><span data-i18n="bombRetryOn"></span><input type="checkbox" id="retryChk"></label>
+        <label><span data-i18n="bombSkipLbl"></span><input type="checkbox" id="skipTurnChk"></label>
+        <label><span data-i18n="bombPeekLbl"></span><input type="checkbox" id="bombPeekChk"></label>
+        <label><span data-i18n="bonusOn"></span><input type="checkbox" id="bonusChk"></label>
+        <label><span data-i18n="bonusMult"></span><input type="number" id="bonusNum" min="1" max="10" step="any"></label>
+        <p class="hint" data-i18n="bonusNote"></p>
+        <label><span data-i18n="bonusBothLbl"></span><input type="checkbox" id="bothChk"></label>
+      </section>
+      <section class="grp perk p-del"><h3 data-i18n="perkDelegate"></h3>
+        <label><span data-i18n="pkQty"></span><input type="number" id="pkQty_delegate" min="0" max="99" step="1"></label>
+        <label><span data-i18n="pkChance"></span><input type="number" id="pkCh_delegate" min="0" max="100" step="5"></label>
+        <label><span data-i18n="peekOn"></span><input type="checkbox" id="peekChk"></label>
+      </section>
+      <section class="grp perk p-dd"><h3 data-i18n="perkDD"></h3>
+        <p class="hint" data-i18n="ddHint"></p>
+        <label><span data-i18n="ddQty"></span><input type="number" id="ddNum" min="1" max="5" step="1" style="width:70px"></label>
+      </section>
+      <section class="grp perk adv p-rq"><h3 data-i18n="perkRQ"></h3>
+        <p class="hint" data-i18n="rqHint"></p>
+        <label class="adv"><span data-i18n="rqModeLbl"></span><select id="rqModeSel"><option value="mult" data-i18n="rqModeMult"></option><option value="flat" data-i18n="rqModeFlat"></option></select></label>
+        <label class="adv"><span data-i18n="rqMultLbl"></span><input type="number" id="rqMultNum" min="1" max="10" step="any"></label>
+        <label class="adv"><span data-i18n="rqFlatLbl"></span><input type="number" id="rqFlatNum" min="0" max="10000" step="50"></label>
+        <label class="adv"><span data-i18n="rqUsesLbl"></span><input type="number" id="rqUsesNum" min="0" max="99" step="1"></label>
+      </section>
+      <section class="grp perk adv p-ch"><h3 data-i18n="perkCH"></h3>
+        <p class="hint" data-i18n="chHint"></p>
+        <label class="adv"><span data-i18n="chModeLbl"></span><select id="chModeSel"><option value="choose" data-i18n="chModeChoose"></option><option value="both" data-i18n="chModeBoth"></option><option value="cat" data-i18n="chModeCat"></option><option value="row" data-i18n="chModeRow"></option></select></label>
+        <label class="adv"><span data-i18n="chUsesLbl"></span><input type="number" id="chUsesNum" min="0" max="99" step="1"></label>
+      </section>
+      <section class="grp perk adv p-mq"><h3 data-i18n="perkMQ"></h3>
+        <p class="hint" data-i18n="mqHint"></p>
+        <label class="adv"><span data-i18n="mqModeLbl"></span><select id="mqModeSel"><option value="choose" data-i18n="mqModeChoose"></option><option value="random" data-i18n="mqModeRandom"></option></select></label>
+        <label class="adv"><span data-i18n="mqUsesLbl"></span><input type="number" id="mqUsesNum" min="0" max="99" step="1"></label>
+      </section>
+      <section class="grp perk adv p-rr"><h3 data-i18n="perkRR"></h3>
+        <p class="hint" data-i18n="rrHint"></p>
+        <label class="adv"><span data-i18n="rrModeLbl"></span><select id="rrModeSel"><option value="same" data-i18n="rrModeSame"></option><option value="random" data-i18n="rrModeRandom"></option><option value="choose" data-i18n="rrModeChoose"></option></select></label>
+        <label class="adv"><span data-i18n="rrUsesLbl"></span><input type="number" id="rrUsesNum" min="0" max="99" step="1"></label>
+      </section>
+      <section class="grp"><h3 data-i18n="secWhere"></h3>
+        <div class="colors"><span class="hint" data-i18n="exclCols"></span><div class="chips" id="exclCols"></div></div>
+        <div class="colors"><span class="hint" data-i18n="exclRows"></span><div class="chips" id="exclRows"></div></div>
+      </section>
+    </div>
+    <div class="panel" id="panelHist" role="tabpanel" aria-labelledby="tabHist" hidden>
+      <label><span data-i18n="histTeam"></span><select id="histSel"></select></label>
+      <p class="hint" id="histStats"></p>
+      <ol class="hist" id="histList"></ol>
+      <div class="actions"><button id="histRes" data-i18n="resultsBtn"></button><button class="skip" id="histClear" data-i18n="histClear"></button></div>
+    </div>
+    <div class="panel" id="panelLook" role="tabpanel" aria-labelledby="tabLook" hidden>
+      <section class="grp"><h3 data-i18n="lookGen"></h3>
+      <label><span data-i18n="language"></span>
+        <select id="langSel"><option value="en">English</option><option value="es">Español</option></select></label>
+      <label><span data-i18n="reduceMotion"></span><input type="checkbox" id="calmChk"></label>
+      <label><span data-i18n="soundLbl"></span><input type="checkbox" id="fxSound"></label>
+      <label><span data-i18n="themeLbl"></span><button class="ghost" id="themeBtn" type="button"></button></label>
+      <button id="langBtn" type="button" hidden></button>
+      </section>
+      <div class="colors grp"><span class="hint" data-i18n="pal"></span><div id="palRow" style="display:flex;flex-wrap:wrap;gap:10px"></div></div>
+      <div class="colors grp">
+        <span class="hint" data-i18n="colors"></span>
+        <label><span data-i18n="cBg"></span><input type="color" id="colBg"></label>
+        <label><span data-i18n="cTile"></span><input type="color" id="colTile"></label>
+        <label><span data-i18n="cGold"></span><input type="color" id="colGold"></label>
+        <label><span data-i18n="cInk"></span><input type="color" id="colInk"></label>
+        <button class="ghost" id="colReset" data-i18n="colReset"></button>
+      </div>
+      <div class="colors grp">
+        <span class="hint" data-i18n="typography"></span>
+        <label><span data-i18n="font"></span><select id="fontSel"></select></label>
+        <label><span data-i18n="textSize"></span><span class="row"><input type="range" id="sizeRng" min="80" max="160" step="10"><output id="sizeOut"></output></span></label>
+      </div>
+    </div>
+    <button class="to-top" id="menuTop" type="button" disabled><svg class="svgIcon" viewBox="0 0 384 512" aria-hidden="true"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path></svg><span class="to-top-label" data-i18n="toTop"></span></button>
+    <div class="actions"><button id="menuLaunch" type="button" hidden></button><button id="closeMenu" data-i18n="close"></button></div>
+  </div>
+</dialog>
+<script src="js/data/i18n.js"></script>
+<script src="js/data/questions.js"></script>
+<script src="js/core/state.js"></script>
+<script src="js/core/board.js"></script>
+<script src="js/core/teams.js"></script>
+<script src="js/features/stages.js"></script>
+<script src="js/features/reroll.js"></script>
+<script src="js/features/mystery-question.js"></script>
+<script src="js/features/challenge.js"></script>
+<script src="js/features/random-question.js"></script>
+<script src="js/features/multiple-choice.js"></script>
+<script src="js/ui/board-view.js"></script>
+<script src="js/features/perks.js"></script>
+<script src="js/ui/scoreboard.js"></script>
+<script src="js/ui/team-perks.js"></script>
+<script src="js/game/clue-flow.js"></script>
+<script src="js/ui/menu-game.js"></script>
+<script src="js/ui/appearance.js"></script>
+<script src="js/ui/board-editor.js"></script>
+<script src="js/ui/difficulty-menu.js"></script>
+<script src="js/ui/question-count.js"></script>
+<script src="js/game/history-log.js"></script>
+<script src="js/ui/category-pool.js"></script>
+<script src="js/ui/history-view.js"></script>
+<script src="js/features/ai-generation.js"></script>
+<script src="js/ui/menu-tabs.js"></script>
+<script src="js/ui/menu-search.js"></script>
+<script src="js/ui/menu-submenu.js"></script>
+<script src="js/ui/menu-switch-anim.js"></script>
+<script src="js/game/session.js"></script>
+<script src="js/features/media-and-csv.js"></script>
+<script src="js/ui/menu-mode.js"></script>
+<script src="js/features/daily-double-final.js"></script>
+<script src="js/game/end-and-pick.js"></script>
+<script src="js/ui/quick-start.js"></script>
+<script src="js/ui/start-categories.js"></script>
+<script src="js/main.js"></script>
+<script src="js/effects.js"></script>
+<script src="js/api-client.js"></script>
+<script src="js/save-load.js"></script>
+</body>
+</html>

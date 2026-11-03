@@ -1,0 +1,18 @@
+/* Design tokens: colors, fonts, theme, color inputs */
+input[type=color]{-webkit-appearance:none;appearance:none;width:40px;height:40px;padding:0;border:3px solid rgba(255,255,255,.85);border-radius:50%;background:none;cursor:pointer;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.35);transition:transform .15s}
+input[type=color]:hover{transform:scale(1.1)}
+input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+input[type=color]::-webkit-color-swatch{border:none;border-radius:50%}
+input[type=color]::-moz-color-swatch{border:none;border-radius:50%}
+.menu .names .nrow input[type=color],.menu input[type=color]{width:40px;height:40px;border-radius:50%;border:3px solid rgba(255,255,255,.85)}
+:root{
+  color-scheme:dark;
+  --accent:var(--gold);--on-tile:var(--ink);--tshadow:none;
+  --f-head:"Nunito",system-ui,sans-serif; --f-body:"Nunito",system-ui,sans-serif;
+  --bg:#14152B; --tile:#272A4F; --tile-hover:#3A3E6E; --gold:#FF6B5A; --ink:#FFF1EC;
+  --line:#0D0E1F; --panel:#1F2140; --good:#4cd6a0; --bad:#ff9a8f; --muted:#A7A9C9;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root{--cat:color-mix(in srgb,var(--tile) 78%,#000)}
+:root[data-theme="light"]{color-scheme:light;--bg:#FFF3EF;--ink:#14152B;--panel:#FCE3DC;--line:#F2C9BE;--muted:#5C5E80;--accent:#D9473A;--on-tile:#fff8ec;--tshadow:none}
+html{scroll-padding-top:env(safe-area-inset-top,0px);font-size:calc(100%*var(--scale,1))}

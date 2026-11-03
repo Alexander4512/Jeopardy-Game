@@ -1,0 +1,18 @@
+/* Vertical menu: tabs as a side list with one sliding bar (design adapted from a Uiverse-style vertical menu) */
+.tab-indicator{display:none}
+@media (min-width:721px){
+  .menu{display:grid;grid-template-columns:210px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;column-gap:24px;row-gap:14px}
+  .menu>.row:first-child{grid-column:1/-1}
+  .menu>.tabs{grid-column:1;grid-row:2;align-self:start;flex-direction:column;flex-wrap:nowrap;gap:2px;position:relative;padding:6px 0;border:0;border-radius:8px;background:color-mix(in srgb,var(--bg) 70%,#000)}
+  .menu>.tabs button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 12px 11px 18px;border-radius:5px;font-size:.98rem;font-weight:600;color:var(--muted);box-shadow:none;transition:background-color .25s ease,color .25s ease}
+  .menu>.tabs button[hidden]{display:none}
+  .menu>.tabs button:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+  .menu>.tabs button[aria-selected="true"]{background:color-mix(in srgb,var(--ink) 11%,transparent);color:var(--ink);box-shadow:none}
+  .menu>.tabs button::before{content:"";font-size:1rem;width:1.3em;text-align:center;filter:grayscale(1);opacity:.7;transition:filter .25s,opacity .25s}
+  .menu>.tabs button[aria-selected="true"]::before{filter:none;opacity:1}
+  #tabGame::before{content:"🎮"}#tabEdit::before{content:"✏️"}#tabCats::before{content:"🏷️"}#tabPerks::before{content:"⚡"}#tabHist::before{content:"📜"}#tabLook::before{content:"🎨"}
+  .menu>.tabs .tab-indicator{display:block;position:absolute;left:0;top:0;width:4px;height:0;background:var(--gold);border-radius:0 5px 5px 0;transition:transform .35s cubic-bezier(.65,0,.35,1),height .35s cubic-bezier(.65,0,.35,1);pointer-events:none;z-index:1}
+  .menu>.panel{grid-column:2;grid-row:2}
+  .menu>.actions{grid-column:1/-1;grid-row:3}
+}
+:root[data-calm="1"] .tab-indicator{transition:none!important}

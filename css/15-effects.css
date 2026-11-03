@@ -1,0 +1,29 @@
+/* Animations and visual effects */
+@keyframes fxCardIn{0%{transform:perspective(900px) rotateX(-75deg) scale(.4);opacity:0}60%{transform:perspective(900px) rotateX(10deg) scale(1.03);opacity:1}100%{transform:none}}
+@keyframes fxTileIn{0%{transform:rotateX(90deg) scale(.6);opacity:0}100%{transform:none;opacity:1}}
+@keyframes fxShake{0%,100%{transform:none}20%{transform:translateX(-12px) rotate(-1deg)}40%{transform:translateX(10px) rotate(1deg)}60%{transform:translateX(-7px)}80%{transform:translateX(5px)}}
+@keyframes fxGlow{0%{box-shadow:0 0 0 0 var(--good)}100%{box-shadow:0 0 0 26px transparent}}
+@keyframes fxPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes fxPop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes fxFloat{0%{transform:translate(-50%,0);opacity:1}100%{transform:translate(-50%,-60px);opacity:0}}
+@keyframes fxBoom{0%{filter:none;transform:none}10%{filter:brightness(2.2);transform:scale(1.02) translate(6px,-4px)}30%{transform:translate(-8px,5px)}50%{transform:translate(6px,3px)}100%{filter:none;transform:none}}
+@keyframes fxReveal{0%{opacity:0;transform:translateY(12px) scale(.9);filter:blur(6px)}100%{opacity:1;transform:none;filter:none}}
+@keyframes fxTick{0%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes fxTrophy{0%{transform:scale(0) rotate(-20deg)}70%{transform:scale(1.2) rotate(6deg)}100%{transform:none}}
+dialog#dlg[open] .card{animation:fxCardIn .55s cubic-bezier(.2,.9,.3,1.2)}
+.card.fx-right{animation:fxGlow .8s ease-out!important}
+.card.fx-wrong{animation:fxShake .45s!important}
+.card.fx-dd{animation:fxPulse .5s 3!important}
+.fx-boom{animation:fxBoom .6s!important}
+.board.fx-deal .tile,.board.fx-deal .cat{animation:fxTileIn .45s both cubic-bezier(.2,.9,.3,1.2)}
+.score.fx-pop{animation:fxPop .5s}
+.score.fx-up{color:var(--good)!important}.score.fx-down{color:var(--bad)!important}
+.team{position:relative}
+.fx-float{position:absolute;left:50%;top:30%;font-weight:800;font-size:1.3rem;pointer-events:none;animation:fxFloat 1.1s ease-out forwards;z-index:3}
+#answer.fx-show{animation:fxReveal .45s ease-out}
+.timer.late.fx-tick{animation:fxTick .3s}
+#resWinner{animation:fxTrophy .7s cubic-bezier(.2,.9,.3,1.3)}
+#fxCanvas{position:fixed;inset:0;pointer-events:none;z-index:2147483647}
+#fxMute{min-width:44px}
+@media (prefers-reduced-motion:reduce){dialog#dlg[open] .card,.card.fx-right,.card.fx-wrong,.card.fx-dd,.fx-boom,.board.fx-deal .tile,.board.fx-deal .cat,.score.fx-pop,#answer.fx-show,#resWinner{animation:none!important}}
+

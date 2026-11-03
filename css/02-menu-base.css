@@ -1,0 +1,25 @@
+/* Menu dialog base: tabs, history list, panels, avatars, team-name rows */
+.menu input[type=range]{accent-color:var(--gold);width:130px}
+.menu output{min-width:3.2em;text-align:right}
+#menuDlg{width:min(1180px,96vw);max-width:min(1180px,96vw)}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--muted)}
+.tabs button{background:transparent;color:var(--muted);padding:8px 14px;border-radius:6px 6px 0 0;font-weight:700}
+.tabs #editBtn{color:var(--ink)}
+.tabs{flex-wrap:wrap}
+.hist{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-height:46vh;overflow:auto}
+.hist li{background:var(--bg);border-radius:8px;padding:8px 10px;border-left:6px solid var(--muted);display:grid;gap:2px}
+.hist .top{display:flex;justify-content:space-between;gap:8px;font-weight:700}
+.hist .q{font-size:.85rem;color:var(--muted)}
+.o-correct{color:var(--good)}
+.o-wrong,.o-nobody{color:var(--bad)}
+.tabs button[aria-selected="true"]{color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent)}
+.panel{display:grid;gap:18px}
+.avatar{width:48px;height:48px;border-radius:50%;border:2px solid var(--accent);background:var(--bg);color:var(--accent);padding:0;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;font-size:1.4rem;flex:none}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.team .top{display:flex;gap:10px;align-items:center}
+.team .top input{min-width:0}
+.nrow{display:flex;gap:8px;align-items:center;margin-top:6px}
+.menu .names .nrow input{margin-top:0}
+.menu .names .nrow input[type=color]{width:40px;height:34px;flex:none;padding:0}
+.nrow .rm{background:transparent;color:var(--ink);border:1px solid var(--muted);width:32px;height:32px;border-radius:50%;padding:0;flex:none}
+.tavatar{width:44px;height:44px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:10px;border:2px solid var(--gold)}
